@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import { CampusProvider, useCampus } from './context/CampusContext';
-import { Navbar } from './components/Navbar';
 import { SearchBar } from './components/SearchBar';
 import { CampusMap } from './components/CampusMap';
 import { NavigationSheet } from './components/NavigationSheet';
@@ -14,15 +13,15 @@ import { QRScannerModal } from './components/QRScannerModal';
 import { PositioningModal } from './components/PositioningModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import {
-  MapPin,
   QrCode,
-  Building2,
-  Layers,
-  Compass,
-  Sparkles,
-  Navigation,
-  Footprints,
-  Globe,
+  Settings,
+  Pencil,
+  Accessibility,
+  Smartphone,
+  ChevronRight,
+  MapPin,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 
 const MainScreenContent: React.FC = () => {
@@ -39,14 +38,20 @@ const MainScreenContent: React.FC = () => {
     userPosition,
     isNavigating,
     startLocation,
+    isEditMode,
+    setIsEditMode,
+    routingPreference,
+    setRoutingPreference,
+    motionTelemetry,
   } = useCampus();
 
   const [isQROpen, setIsQROpen] = useState(false);
   const [isPositioningOpen, setIsPositioningOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  // Popular campus shortcuts
   const popularPlaces = locations.filter(l => l.isPopular).slice(0, 6);
+  const isWheelchair = routingPreference === 'wheelchair';
 
   const handleQuickGo = (loc: typeof locations[0]) => {
     setSelectedDestination(loc);
@@ -54,84 +59,95 @@ const MainScreenContent: React.FC = () => {
   };
 
   const currentStartLabel = startLocation
-    ? `${startLocation.name} (${startLocation.roomNumber})`
-    : userPosition.confirmedLocationName || 'Main Campus Gate';
+    ? `${startLocation.name.split(' (')[0]} (${startLocation.roomNumber})`
+    : userPosition.confirmedLocationName || 'Main Gate';
 
   return (
-    <div className="min-h-screen flex flex-col text-slate-800 font-sans selection:bg-[#0f3b7a] selection:text-white">
-      {/* 1. Header Navbar */}
-      <Navbar
-        onOpenQRScanner={() => setIsQROpen(true)}
-        onOpenPositioningModal={() => setIsPositioningOpen(true)}
-        isAdminOpen={isAdminOpen}
-        onToggleAdmin={() => setIsAdminOpen(prev => !prev)}
-      />
+    <div className="relative w-screen h-screen overflow-hidden bg-[#e8ecef] text-neutral-900 select-none">
+      {/* FULL-VIEWPORT INTERACTIVE MAP CANVAS */}
+      <div className="absolute inset-0 z-0">
+        <CampusMap />
+      </div>
 
-      {/* 2. Main Interactive Map Area */}
-      <main className="flex-1 flex flex-col max-w-7xl w-full mx-auto px-2.5 sm:px-5 py-3 gap-3 relative">
-        {/* Top Control Deck: Search + Block/Floor Blueprint Selector */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
-          {/* Forgiving Search Bar */}
-          <div className={isNavigating ? 'lg:col-span-12' : 'lg:col-span-5 w-full'}>
-            <SearchBar />
-          </div>
+      {/* FLOATING TOP-LEFT SEARCH & EXPLORE DRAWER (Google / Apple Maps style) */}
+      <div
+        className={`absolute top-3 left-3 z-20 flex flex-col gap-2 transition-all duration-200 pointer-events-none ${
+          isSidebarCollapsed ? 'w-auto' : 'w-[calc(100vw-24px)] sm:w-[376px]'
+        }`}
+      >
+        {/* Top Row: Search Box + Sidebar Toggle */}
+        <div className="pointer-events-auto flex items-start gap-2">
+          {!isSidebarCollapsed ? (
+            <div className="flex-1 min-w-0">
+              <SearchBar onCollapse={() => setIsSidebarCollapsed(true)} />
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsSidebarCollapsed(false)}
+              className="h-11 px-3.5 rounded-xl bg-white hover:bg-neutral-50 text-neutral-900 shadow-lg ring-1 ring-black/8 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-all"
+              title="Open Campus Search & Directory"
+            >
+              <PanelLeftOpen className="w-4 h-4 text-neutral-700" />
+              <span>Canara Campus</span>
+            </button>
+          )}
+        </div>
 
-          {/* Current Start Point & Building / Floor Blueprint Switcher */}
-          {!isNavigating && (
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-slate-200/90 shadow-sm flex flex-col gap-2.5">
-              {/* Current Location Status Row */}
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200/60 shrink-0">
-                    <MapPin className="w-3.5 h-3.5" />
+        {/* Floating Left Panel Body (hidden during active navigation or when collapsed) */}
+        {!isSidebarCollapsed && !isNavigating && (
+          <div className="hidden sm:flex flex-col bg-white/96 backdrop-blur-xl rounded-2xl shadow-xl ring-1 ring-black/8 overflow-hidden pointer-events-auto max-h-[calc(100vh-140px)]">
+            {/* Compact Campus Identity & Start Location */}
+            <div className="px-4 py-3 border-b border-neutral-100 flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                  <span className="text-[11px] font-medium text-neutral-500 truncate">
+                    Canara Engineering College
                   </span>
-                  <div className="min-w-0">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-none">
-                      Starting Point (You Are Here)
-                    </span>
-                    <span className="text-xs font-extrabold text-slate-800 truncate block mt-0.5">
-                      {currentStartLabel}
-                    </span>
-                  </div>
                 </div>
-
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    onClick={() => setIsPositioningOpen(true)}
-                    className="min-h-[32px] inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-bold text-[11px] cursor-pointer transition-colors"
-                    title="Calibrate mobile walking sensors or GPS"
-                  >
-                    <Footprints className="w-3 h-3 text-[#0f3b7a]" />
-                    <span>Mobile Walk QR</span>
-                  </button>
-                  <button
-                    onClick={() => setIsQROpen(true)}
-                    className="min-h-[32px] inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0f3b7a] hover:bg-[#0a2752] text-white font-bold text-[11px] cursor-pointer transition-all shadow-2xs"
-                    title="Scan QR checkpoint or change starting point"
-                  >
-                    <QrCode className="w-3 h-3 text-amber-300" />
-                    <span>Change Start</span>
-                  </button>
-                </div>
+                <button
+                  onClick={() => setIsQROpen(true)}
+                  className="mt-0.5 flex items-center gap-1.5 text-left group cursor-pointer max-w-full"
+                  title="Change starting location or scan QR"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span className="text-xs font-semibold text-neutral-900 group-hover:text-blue-600 truncate transition-colors">
+                    {currentStartLabel}
+                  </span>
+                </button>
               </div>
+              <button
+                onClick={() => setIsQROpen(true)}
+                className="px-2.5 py-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200/80 text-neutral-800 text-[11px] font-semibold flex items-center gap-1 cursor-pointer shrink-0 transition-colors"
+                title="Scan QR plaque or set start point"
+              >
+                <QrCode className="w-3.5 h-3.5" />
+                <span>QR</span>
+              </button>
+            </div>
 
-              {/* Block & Floor Blueprint Segmented Switcher */}
-              <div className="flex flex-wrap items-center gap-1.5 text-xs">
+            {/* Buildings & Floor Blueprints Selector */}
+            <div className="px-4 py-3 border-b border-neutral-100">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-semibold text-neutral-500">
+                  Campus Blocks &amp; Floors
+                </span>
                 <button
                   onClick={() => {
                     setActiveBuildingId(null);
                     setActiveFloorId('outdoor');
                   }}
-                  className={`min-h-[36px] px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`text-[11px] font-semibold px-2 py-0.5 rounded-md cursor-pointer transition-colors ${
                     !activeBuildingId || activeBuildingId === 'outdoor'
-                      ? 'bg-[#0f3b7a] text-white border-[#0f3b7a] shadow-xs'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200/80'
+                      ? 'bg-neutral-900 text-white'
+                      : 'text-neutral-600 hover:bg-neutral-100'
                   }`}
                 >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Campus Map</span>
+                  Overview
                 </button>
+              </div>
 
+              <div className="space-y-1.5">
                 {buildings.map(b => {
                   const bFloors = floors
                     .filter(f => f.buildingId === b.id)
@@ -141,25 +157,19 @@ const MainScreenContent: React.FC = () => {
                   return (
                     <div
                       key={b.id}
-                      className={`flex items-center gap-1 rounded-xl border p-1 transition-all ${
-                        isBlockActive
-                          ? 'bg-blue-50/90 border-[#0f3b7a]/40 shadow-2xs'
-                          : 'bg-slate-50/70 border-slate-200/80 hover:border-slate-300'
+                      className={`flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl transition-colors ${
+                        isBlockActive ? 'bg-blue-50/70 ring-1 ring-blue-200/80' : 'hover:bg-neutral-50'
                       }`}
                     >
                       <button
                         onClick={() => setActiveBuildingId(b.id)}
-                        className="min-h-[28px] text-xs font-extrabold text-slate-800 hover:text-[#0f3b7a] px-2 cursor-pointer flex items-center gap-1.5"
-                        title={b.name}
+                        className="text-left min-w-0 flex-1 cursor-pointer"
                       >
-                        <span
-                          className="w-2 h-2 rounded-full shrink-0 shadow-2xs"
-                          style={{ backgroundColor: b.color }}
-                        />
-                        <span>{b.code}</span>
+                        <div className="text-xs font-semibold text-neutral-900 truncate">
+                          {b.name.split(' (')[0]}
+                        </div>
                       </button>
-
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 shrink-0">
                         {bFloors.map(f => {
                           const isFloorActive = activeFloorId === f.id;
                           return (
@@ -169,14 +179,14 @@ const MainScreenContent: React.FC = () => {
                                 setActiveBuildingId(b.id);
                                 setActiveFloorId(f.id);
                               }}
-                              className={`min-h-[28px] px-2 py-0.5 rounded-lg text-[11px] font-mono font-extrabold transition-all cursor-pointer flex items-center gap-0.5 ${
+                              className={`h-6 min-w-[28px] px-1.5 rounded-md text-[11px] font-mono font-semibold cursor-pointer transition-colors ${
                                 isFloorActive
-                                  ? 'bg-[#0f3b7a] text-white shadow-xs'
-                                  : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/70'
+                                  ? 'bg-neutral-900 text-white'
+                                  : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
                               }`}
-                              title={`${b.name} – ${f.floorName}`}
+                              title={`${b.name.split(' (')[0]} – ${f.floorName}`}
                             >
-                              <span>{f.code}</span>
+                              {f.code}
                             </button>
                           );
                         })}
@@ -186,75 +196,153 @@ const MainScreenContent: React.FC = () => {
                 })}
               </div>
             </div>
-          )}
-        </div>
 
-        {/* Interactive Map Surface */}
-        <div className="relative w-full flex-1">
-          <CampusMap />
-        </div>
-
-        {/* Frequently Visited Destinations Tray */}
-        {!isNavigating && (
-          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-3.5 border border-slate-200/90 shadow-sm">
-            <div className="flex items-center justify-between mb-2.5">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-600">
-                  <Sparkles className="w-3.5 h-3.5" />
+            {/* Quick Places Directory */}
+            <div className="px-4 py-3 overflow-y-auto">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[11px] font-semibold text-neutral-500">
+                  Quick Destinations
                 </span>
-                <span className="text-xs font-extrabold text-slate-800 uppercase tracking-wider">
-                  Popular Campus Destinations
-                </span>
+                <button
+                  onClick={() => setIsSidebarCollapsed(true)}
+                  className="text-neutral-400 hover:text-neutral-700 p-1 rounded cursor-pointer"
+                  title="Hide panel"
+                >
+                  <PanelLeftClose className="w-3.5 h-3.5" />
+                </button>
               </div>
-              <span className="text-[11px] font-medium text-slate-400">
-                One-tap instant turn-by-turn route
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-              {popularPlaces.map(place => {
-                const placeFloor = floors.find(f => f.id === place.floorId);
-                return (
-                  <button
-                    key={place.id}
-                    onClick={() => handleQuickGo(place)}
-                    className="min-h-[68px] p-2.5 rounded-xl bg-gradient-to-br from-slate-50 to-white hover:from-blue-50/70 hover:to-white border border-slate-200/90 hover:border-[#0f3b7a] transition-all text-left flex flex-col justify-between group cursor-pointer shadow-2xs hover:shadow-md hover:-translate-y-0.5"
-                  >
-                    <div className="flex items-center justify-between gap-1 mb-1.5">
-                      <span className="font-mono text-[10px] font-extrabold text-[#0f3b7a] bg-blue-50 px-1.5 py-0.5 rounded-md border border-blue-200/80">
-                        {place.roomNumber}
-                      </span>
-                      <span className="w-5 h-5 rounded-full bg-slate-100 group-hover:bg-[#0f3b7a] text-slate-500 group-hover:text-white flex items-center justify-center transition-colors">
-                        <Navigation className="w-2.5 h-2.5" />
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-xs font-extrabold text-slate-800 group-hover:text-[#0f3b7a] line-clamp-1 block">
-                        {place.name.split(' (')[0]}
-                      </span>
-                      <span className="text-[10px] font-semibold text-slate-400 block mt-0.5">
-                        {placeFloor?.floorName || 'Ground Floor'}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+              <div className="divide-y divide-neutral-100">
+                {popularPlaces.map(place => {
+                  const placeFloor = floors.find(f => f.id === place.floorId);
+                  return (
+                    <button
+                      key={place.id}
+                      onClick={() => handleQuickGo(place)}
+                      className="w-full py-2 flex items-center justify-between gap-2 text-left hover:bg-neutral-50 -mx-2 px-2 rounded-lg transition-colors group cursor-pointer"
+                    >
+                      <div className="min-w-0">
+                        <div className="text-xs font-semibold text-neutral-900 group-hover:text-blue-600 truncate transition-colors">
+                          {place.name.split(' (')[0]}
+                        </div>
+                        <div className="text-[11px] text-neutral-500 flex items-center gap-1.5 mt-0.5">
+                          <span className="font-mono text-[10px] text-neutral-600">{place.roomNumber}</span>
+                          <span>·</span>
+                          <span>{placeFloor?.floorName.split(' (')[0] || 'Ground'}</span>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-neutral-300 group-hover:text-neutral-700 shrink-0 transition-colors" />
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}
-      </main>
+      </div>
 
-      {/* 3. Bottom Cards & Modals */}
+      {/* FLOATING TOP-RIGHT COMPACT TOOL CLUSTER */}
+      <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
+        <button
+          onClick={() => setRoutingPreference(isWheelchair ? 'shortest' : 'wheelchair')}
+          className={`h-10 px-3 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 transition-all cursor-pointer ${
+            isWheelchair
+              ? 'bg-neutral-900 text-white ring-neutral-900'
+              : 'bg-white/95 hover:bg-white text-neutral-800 ring-black/8 backdrop-blur-md'
+          }`}
+          title={isWheelchair ? 'Lift-Only accessible routing active' : 'Switch to Lift-Only accessible routing'}
+        >
+          <Accessibility className="w-4 h-4" />
+          <span className="hidden md:inline">{isWheelchair ? 'Lift Only' : 'Accessible'}</span>
+        </button>
+
+        <button
+          onClick={() => setIsPositioningOpen(true)}
+          className="h-10 px-3 rounded-xl bg-white/95 hover:bg-white text-neutral-800 text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 ring-black/8 backdrop-blur-md transition-all cursor-pointer"
+          title="Live walking sensors & Mobile HTTPS QR"
+        >
+          <span
+            className={`w-2 h-2 rounded-full ${
+              motionTelemetry.isReceivingSensorEvents ? 'bg-emerald-500' : 'bg-amber-500'
+            }`}
+          />
+          <Smartphone className="w-3.5 h-3.5 text-neutral-600 md:hidden" />
+          <span className="hidden md:inline">
+            {motionTelemetry.stepCount > 0 ? `${motionTelemetry.stepCount} steps` : 'Walk Sensors'}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setIsQROpen(true)}
+          className="sm:hidden h-10 w-10 rounded-xl bg-white/95 hover:bg-white text-neutral-800 flex items-center justify-center shadow-lg ring-1 ring-black/8 backdrop-blur-md cursor-pointer"
+          title="Scan QR Checkpoint"
+        >
+          <QrCode className="w-4 h-4" />
+        </button>
+
+        <button
+          onClick={() => setIsEditMode(!isEditMode)}
+          className={`hidden sm:flex h-10 w-10 rounded-xl items-center justify-center shadow-lg ring-1 transition-all cursor-pointer ${
+            isEditMode
+              ? 'bg-amber-400 text-neutral-950 ring-amber-500'
+              : 'bg-white/95 hover:bg-white text-neutral-700 ring-black/8 backdrop-blur-md'
+          }`}
+          title="Map Node Editor"
+        >
+          <Pencil className="w-4 h-4" />
+        </button>
+
+        <button
+          onClick={() => setIsAdminOpen(prev => !prev)}
+          className={`h-10 w-10 rounded-xl flex items-center justify-center shadow-lg ring-1 transition-all cursor-pointer ${
+            isAdminOpen
+              ? 'bg-neutral-900 text-white ring-neutral-900'
+              : 'bg-white/95 hover:bg-white text-neutral-700 ring-black/8 backdrop-blur-md'
+          }`}
+          title="Campus Data Admin"
+        >
+          <Settings className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* MOBILE BOTTOM QUICK BLOCK BAR (only on small screens when not navigating) */}
+      {!isNavigating && (
+        <div className="sm:hidden absolute bottom-3 left-3 right-16 z-10 flex items-center gap-1.5 overflow-x-auto no-scrollbar pointer-events-auto">
+          <button
+            onClick={() => {
+              setActiveBuildingId(null);
+              setActiveFloorId('outdoor');
+            }}
+            className={`px-3 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer ${
+              !activeBuildingId || activeBuildingId === 'outdoor'
+                ? 'bg-neutral-900 text-white ring-neutral-900'
+                : 'bg-white/95 text-neutral-800 ring-black/8'
+            }`}
+          >
+            Campus
+          </button>
+          {buildings.map(b => (
+            <button
+              key={b.id}
+              onClick={() => setActiveBuildingId(b.id)}
+              className={`px-3 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer ${
+                activeBuildingId === b.id
+                  ? 'bg-neutral-900 text-white ring-neutral-900'
+                  : 'bg-white/95 text-neutral-800 ring-black/8'
+              }`}
+            >
+              {b.name.split(' (')[0]}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* FLOATING BOTTOM DESTINATION CARD & NAVIGATION SHEET */}
       <DestinationCard />
       <NavigationSheet />
 
-      {/* QR Scanner & Generator Modal */}
+      {/* MODALS */}
       <QRScannerModal isOpen={isQROpen} onClose={() => setIsQROpen(false)} />
-
-      {/* Positioning Infrastructure Modal */}
       <PositioningModal isOpen={isPositioningOpen} onClose={() => setIsPositioningOpen(false)} />
-
-      {/* Admin Dashboard */}
       {isAdminOpen && <AdminDashboard onClose={() => setIsAdminOpen(false)} />}
     </div>
   );

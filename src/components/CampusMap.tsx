@@ -318,37 +318,25 @@ export const CampusMap: React.FC = () => {
   }, [selectedDestination, activeBuildingId, activeFloorId]);
 
   return (
-    <div className="relative w-full h-[490px] sm:h-[560px] lg:h-[610px] bg-slate-100 rounded-2xl overflow-hidden border border-slate-300/90 shadow-md select-none flex flex-col">
-      {/* Top Status & Floor Legs Bar */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 max-w-[82%] pointer-events-none">
-        {/* Current Location / Floor Pill */}
-        <div className="bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200/90 shadow-md flex items-center gap-2.5 pointer-events-auto">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0f3b7a]" />
+    <div className="relative w-full h-full bg-[#e8ecef] overflow-hidden select-none flex flex-col">
+      {/* Top-Center Active Floor & Multi-Floor Route Leg Pill */}
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-1.5 pointer-events-none">
+        <div className="bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-md ring-1 ring-black/8 flex items-center gap-2 pointer-events-auto">
+          <span className="w-2 h-2 rounded-full bg-blue-600" />
+          <span className="text-xs font-semibold text-neutral-900">
+            {currentBuilding ? currentBuilding.name.split(' (')[0] : 'Canara Engineering College'}
           </span>
-          <div className="text-xs flex items-center gap-1.5 flex-wrap">
-            <span className="font-extrabold text-slate-900">
-              {currentBuilding ? currentBuilding.name.split(' (')[0] : 'Canara Engineering College'}
-            </span>
-            {currentFloor && activeFloorId !== 'outdoor' && activeBuildingId !== null ? (
-              <span className="px-2 py-0.5 rounded-md bg-blue-50 text-[#0f3b7a] font-bold text-[11px] border border-blue-200/60">
-                {currentFloor.floorName}
-              </span>
-            ) : (
-              <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-bold text-[11px] border border-emerald-200/60">
-                Master Outdoor Layout
-              </span>
-            )}
-          </div>
+          <span className="text-neutral-300">·</span>
+          <span className="text-xs font-medium text-neutral-600">
+            {currentFloor && activeFloorId !== 'outdoor' && activeBuildingId !== null
+              ? currentFloor.floorName
+              : 'Campus Grounds'}
+          </span>
         </div>
 
-        {/* Multi-floor route leg switcher banner */}
+        {/* Multi-floor route leg switcher */}
         {activeRoute && routeFloorsBreakdown.length > 1 && (
-          <div className="bg-slate-900/95 backdrop-blur-md text-white px-3 py-2 rounded-xl shadow-lg border border-white/10 flex items-center gap-1.5 text-xs font-semibold overflow-x-auto no-scrollbar pointer-events-auto">
-            <span className="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap mr-1">
-              Floor Path:
-            </span>
+          <div className="bg-neutral-900/92 backdrop-blur-md text-white px-2.5 py-1.5 rounded-full shadow-lg flex items-center gap-1 text-[11px] font-medium pointer-events-auto">
             {routeFloorsBreakdown.map((leg, idx) => {
               const isCurrentLegFloor =
                 leg.floorId === activeFloorId ||
@@ -364,12 +352,11 @@ export const CampusMap: React.FC = () => {
                       setActiveFloorId(leg.floorId);
                     }
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap ${
+                  className={`px-2.5 py-0.5 rounded-full transition-colors cursor-pointer whitespace-nowrap ${
                     isCurrentLegFloor
-                      ? 'bg-amber-400 text-slate-950 font-black shadow-xs scale-[1.02]'
-                      : 'bg-white/12 hover:bg-white/20 text-slate-200'
+                      ? 'bg-white text-neutral-950 font-semibold'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
-                  title={`View route leg on ${leg.floorName}`}
                 >
                   {idx + 1}. {leg.floorName.split(' (')[0]}
                 </button>
@@ -462,12 +449,9 @@ export const CampusMap: React.FC = () => {
         </div>
       )}
 
-      {/* ALWAYS-VISIBLE 4-FLOOR SWITCHER (Right side, large touch targets) */}
-      <div className="absolute right-3 top-3 z-10 flex flex-col bg-white rounded-xl p-1.5 border border-slate-300 shadow-md">
-        <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 text-center pb-1 border-b border-slate-100 mb-1">
-          Floor
-        </div>
-        <div className="flex flex-col gap-1">
+      {/* ALWAYS-VISIBLE 4-FLOOR SWITCHER (Right side, floating Apple Maps style) */}
+      <div className="absolute right-3 top-16 z-10 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl p-1 ring-1 ring-black/8 shadow-lg">
+        <div className="flex flex-col gap-0.5">
           {academicFloors.map(f => {
             const isActive = f.id === activeFloorId;
             const isUserFloor = userPosition.floorId === f.id;
@@ -481,94 +465,70 @@ export const CampusMap: React.FC = () => {
                   setActiveBuildingId('block_classroom');
                   setActiveFloorId(f.id);
                 }}
-                className={`relative min-w-[44px] min-h-[44px] rounded-lg flex items-center justify-center font-bold text-xs transition-all cursor-pointer border ${
+                className={`relative w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-xs transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#0f3b7a] text-white border-[#0f3b7a] shadow-xs'
+                    ? 'bg-neutral-900 text-white shadow-sm'
                     : isPathFloor
-                    ? 'bg-blue-50 text-[#0f3b7a] border-blue-300'
-                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-neutral-700 hover:bg-neutral-100'
                 }`}
                 title={f.floorName}
                 aria-label={`Switch to ${f.floorName}`}
               >
                 <span>{f.code}</span>
-
-                {/* Status indicator badges */}
                 {isUserFloor && (
-                  <span
-                    className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white ring-1 ring-emerald-600"
-                    title="You are currently on this floor"
-                  />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full" />
                 )}
                 {isDestFloor && !isUserFloor && (
-                  <span
-                    className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full border-2 border-white ring-1 ring-amber-600"
-                    title="Destination is on this floor"
-                  />
+                  <span className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 bg-rose-500 rounded-full" />
                 )}
               </button>
             );
           })}
         </div>
 
-        {/* Master Campus Overview button */}
-        <div className="mt-1 pt-1 border-t border-slate-100 flex flex-col gap-1">
-          <button
-            onClick={() => {
-              setActiveBuildingId(null);
-              setActiveFloorId('outdoor');
-            }}
-            className={`min-w-[44px] min-h-[40px] rounded-lg flex flex-col items-center justify-center text-[10px] font-bold transition-all cursor-pointer border ${
-              activeBuildingId === null || activeFloorId === 'outdoor'
-                ? 'bg-[#0f3b7a] text-white border-[#0f3b7a]'
-                : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-            }`}
-            title="Campus Grounds Overview"
-          >
-            <span>OUT</span>
-          </button>
-        </div>
-      </div>
+        <div className="h-px bg-neutral-200/80 my-1 mx-1.5" />
 
-      {/* Bottom-Left Map Legend Pill */}
-      <div className="hidden sm:flex absolute left-3 bottom-3 z-10 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/90 shadow-md items-center gap-3 text-[11px] font-bold text-slate-600 pointer-events-none">
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#0f3b7a] ring-2 ring-blue-200" />
-          <span>You Are Here</span>
-        </span>
-        <span className="text-slate-300">•</span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-          <span>Destination / Stairs</span>
-        </span>
-        <span className="text-slate-300">•</span>
-        <span className="text-slate-400 font-medium">Tap anywhere on map to relocate</span>
+        <button
+          onClick={() => {
+            setActiveBuildingId(null);
+            setActiveFloorId('outdoor');
+          }}
+          className={`w-10 h-9 rounded-xl flex items-center justify-center text-[10px] font-semibold transition-all cursor-pointer ${
+            activeBuildingId === null || activeFloorId === 'outdoor'
+              ? 'bg-neutral-900 text-white shadow-sm'
+              : 'text-neutral-600 hover:bg-neutral-100'
+          }`}
+          title="Campus Grounds Overview"
+        >
+          OUT
+        </button>
       </div>
 
       {/* Floating Map Zoom / Center Controls */}
-      <div className="absolute right-3 bottom-3 z-10 flex flex-col gap-1.5">
-        <div className="bg-white rounded-xl border border-slate-300 shadow-md p-1 flex flex-col gap-1">
+      <div className="absolute right-3 bottom-4 z-10 flex flex-col gap-2">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl ring-1 ring-black/8 shadow-lg p-1 flex flex-col gap-0.5">
           <button
             onClick={handleZoomIn}
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-neutral-700 hover:bg-neutral-100 transition-colors cursor-pointer"
             title="Zoom In"
             aria-label="Zoom In"
           >
             <Plus className="w-4 h-4" />
           </button>
-          <div className="h-px bg-slate-200 mx-1" />
+          <div className="h-px bg-neutral-200/80 mx-1.5" />
           <button
             onClick={handleZoomOut}
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-neutral-700 hover:bg-neutral-100 transition-colors cursor-pointer"
             title="Zoom Out"
             aria-label="Zoom Out"
           >
             <Minus className="w-4 h-4" />
           </button>
-          <div className="h-px bg-slate-200 mx-1" />
+          <div className="h-px bg-neutral-200/80 mx-1.5" />
           <button
             onClick={handleResetView}
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-neutral-700 hover:bg-neutral-100 transition-colors cursor-pointer"
             title="Reset View"
             aria-label="Reset View"
           >
@@ -578,7 +538,7 @@ export const CampusMap: React.FC = () => {
 
         <button
           onClick={handleCenterUser}
-          className="w-10 h-10 bg-white rounded-xl border border-slate-300 shadow-md flex items-center justify-center text-[#0f3b7a] hover:bg-blue-50 transition-colors cursor-pointer"
+          className="w-11 h-11 bg-white/95 backdrop-blur-md rounded-2xl ring-1 ring-black/8 shadow-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
           title="Center on My Location"
           aria-label="Center on My Location"
         >
@@ -601,49 +561,69 @@ export const CampusMap: React.FC = () => {
         onClick={handleSvgClick}
       >
         <defs>
-          <pattern id="cecGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" strokeWidth="0.8" opacity="0.6" />
+          <filter id="bldgShadow" x="-10%" y="-10%" width="125%" height="125%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="#1e293b" floodOpacity="0.10" />
+          </filter>
+          <pattern id="lawnPattern" width="24" height="24" patternUnits="userSpaceOnUse">
+            <circle cx="12" cy="12" r="1" fill="#86efac" opacity="0.45" />
           </pattern>
         </defs>
 
         <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-          {/* 1. OUTDOOR CAMPUS MASTER PLAN */}
+          {/* 1. OUTDOOR CAMPUS MASTER PLAN (Cartographic Map Style) */}
           {activeBuildingId === null || activeFloorId === 'outdoor' ? (
             <g id="outdoorView">
-              <rect x="0" y="0" width="1000" height="650" fill="#f8fafc" />
-              <rect x="0" y="0" width="1000" height="650" fill="url(#cecGrid)" />
+              {/* Warm map land base */}
+              <rect x="-400" y="-300" width="1800" height="1300" fill="#eef1ec" />
 
-              <text x="500" y="60" textAnchor="middle" fill="#0f3b7a" fontSize="18" fontWeight="800" letterSpacing="1">
-                CANARA ENGINEERING COLLEGE
+              {/* Campus Green Grounds & Lawns */}
+              <rect x="45" y="95" width="910" height="440" rx="36" fill="#dcecd9" stroke="#c3dec0" strokeWidth="1.5" />
+              <rect x="45" y="95" width="910" height="440" rx="36" fill="url(#lawnPattern)" />
+
+              {/* Decorative Campus Trees */}
+              {[
+                [80, 480], [115, 505], [150, 485], [840, 485], [885, 500], [915, 470],
+                [72, 130], [925, 130], [352, 230], [655, 230], [310, 475], [690, 475],
+              ].map(([tx, ty], i) => (
+                <g key={i} opacity="0.72">
+                  <circle cx={tx} cy={ty} r="14" fill="#a7d7a9" />
+                  <circle cx={tx - 3} cy={ty - 3} r="9" fill="#b9e2bb" />
+                </g>
+              ))}
+
+              {/* Road Casing (Outer Border) */}
+              <path d="M 500 610 L 500 310" stroke="#cfd6dc" strokeWidth="32" strokeLinecap="round" />
+              <path d="M 210 420 L 795 420" stroke="#cfd6dc" strokeWidth="26" strokeLinecap="round" />
+              <path d="M 210 420 L 210 310" stroke="#cfd6dc" strokeWidth="22" strokeLinecap="round" />
+              <path d="M 795 420 L 795 310" stroke="#cfd6dc" strokeWidth="22" strokeLinecap="round" />
+
+              {/* Paved Road Fill */}
+              <path d="M 500 610 L 500 310" stroke="#ffffff" strokeWidth="26" strokeLinecap="round" />
+              <path d="M 210 420 L 795 420" stroke="#ffffff" strokeWidth="20" strokeLinecap="round" />
+              <path d="M 210 420 L 210 310" stroke="#ffffff" strokeWidth="16" strokeLinecap="round" />
+              <path d="M 795 420 L 795 310" stroke="#ffffff" strokeWidth="16" strokeLinecap="round" />
+
+              {/* Subtle Road Centerline */}
+              <path d="M 500 595 L 500 420" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="6 6" />
+
+              {/* Central Landscaped Courtyard */}
+              <rect x="340" y="346" width="320" height="52" rx="16" fill="#cde3ca" stroke="#a6cba1" strokeWidth="1.5" />
+              <text x="500" y="376" textAnchor="middle" fill="#3f6240" fontSize="10" fontWeight="700" letterSpacing="1.4">
+                CENTRAL COURTYARD
               </text>
-              <text x="500" y="82" textAnchor="middle" fill="#475569" fontSize="11" fontWeight="600">
-                Sudhindra Nagar, Benjanapadavu • Campus Master Layout
-              </text>
 
-              {/* Campus Roads & Walkways */}
-              <path d="M 500 560 L 500 310" stroke="#cbd5e1" strokeWidth="24" strokeLinecap="round" />
-              <path d="M 210 420 L 795 420" stroke="#cbd5e1" strokeWidth="20" strokeLinecap="round" />
-              <path d="M 210 420 L 210 310" stroke="#cbd5e1" strokeWidth="18" strokeLinecap="round" />
-              <path d="M 795 420 L 795 310" stroke="#cbd5e1" strokeWidth="18" strokeLinecap="round" />
-              <path d="M 500 560 L 500 420" stroke="#ffffff" strokeWidth="2" strokeDasharray="8 6" />
-
-              {/* Central Courtyard Quad */}
-              <rect x="330" y="345" width="340" height="55" rx="12" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.5" />
-              <text x="500" y="378" textAnchor="middle" fill="#334155" fontSize="11" fontWeight="700">
-                CAMPUS COURTYARD
-              </text>
-
-              {/* Entrance Gate */}
-              <circle cx="500" cy="560" r="28" fill="#e2e8f0" stroke="#475569" strokeWidth="2.5" />
-              <text x="500" y="606" textAnchor="middle" fill="#1e293b" fontSize="11" fontWeight="700">
+              {/* Main Entrance Gate Plaza */}
+              <circle cx="500" cy="560" r="24" fill="#ffffff" stroke="#94a3b8" strokeWidth="2" filter="url(#bldgShadow)" />
+              <circle cx="500" cy="560" r="6" fill="#2563eb" />
+              <text x="500" y="602" textAnchor="middle" fill="#475569" fontSize="10" fontWeight="700" letterSpacing="0.8">
                 MAIN ENTRANCE GATE
               </text>
 
-              {/* Buildings */}
+              {/* Architectural Building Footprints */}
               {buildings.map(b => {
                 const isSelected = selectedDestination?.buildingId === b.id;
                 const bFloors = floors.filter(f => f.buildingId === b.id);
-                const floorCodes = bFloors.map(f => f.code).join(' • ');
+                const floorCodes = bFloors.map(f => f.code).join(' · ');
 
                 return (
                   <g
@@ -654,78 +634,96 @@ export const CampusMap: React.FC = () => {
                       setActiveBuildingId(b.id);
                     }}
                   >
+                    {/* 3D Extruded Wall Base */}
+                    <rect
+                      x={b.canvasBounds.x}
+                      y={b.canvasBounds.y + 8}
+                      width={b.canvasBounds.width}
+                      height={b.canvasBounds.height}
+                      rx="16"
+                      fill="#cfd8e3"
+                    />
+
+                    {/* Building Roof Surface */}
                     <rect
                       x={b.canvasBounds.x}
                       y={b.canvasBounds.y}
                       width={b.canvasBounds.width}
                       height={b.canvasBounds.height}
-                      rx="12"
+                      rx="16"
                       fill="#ffffff"
-                      stroke={isSelected ? '#0f3b7a' : '#94a3b8'}
-                      strokeWidth={isSelected ? 3.5 : 2}
-                      className="transition-colors group-hover:brightness-95"
+                      stroke={isSelected ? '#2563eb' : '#cbd5e1'}
+                      strokeWidth={isSelected ? 3 : 1.5}
+                      filter="url(#bldgShadow)"
+                      className="transition-all group-hover:fill-[#f8fafc]"
                     />
 
-                    {/* Header bar */}
+                    {/* Subtle Architectural Roof Accent */}
                     <rect
-                      x={b.canvasBounds.x}
-                      y={b.canvasBounds.y}
-                      width={b.canvasBounds.width}
-                      height="28"
+                      x={b.canvasBounds.x + 14}
+                      y={b.canvasBounds.y + 14}
+                      width={b.canvasBounds.width - 28}
+                      height={b.canvasBounds.height - 28}
                       rx="10"
-                      fill="#0f3b7a"
+                      fill="#f8fafc"
+                      stroke="#e2e8f0"
+                      strokeWidth="1"
+                    />
+
+                    {/* Building Code Tag */}
+                    <rect
+                      x={b.canvasBounds.x + 22}
+                      y={b.canvasBounds.y + 22}
+                      width="42"
+                      height="20"
+                      rx="6"
+                      fill={b.color}
+                      opacity="0.14"
                     />
                     <text
-                      x={b.canvasBounds.x + b.canvasBounds.width / 2}
-                      y={b.canvasBounds.y + 19}
+                      x={b.canvasBounds.x + 43}
+                      y={b.canvasBounds.y + 35.5}
                       textAnchor="middle"
-                      fill="#ffffff"
-                      fontSize="11"
+                      fill={b.color}
+                      fontSize="10"
                       fontWeight="800"
                     >
                       {b.code}
                     </text>
 
+                    {/* Building Title */}
                     <text
                       x={b.canvasBounds.x + b.canvasBounds.width / 2}
-                      y={b.canvasBounds.y + 60}
+                      y={b.canvasBounds.y + 78}
                       textAnchor="middle"
                       fill="#0f172a"
-                      fontSize="13"
-                      fontWeight="800"
+                      fontSize="14"
+                      fontWeight="700"
                     >
                       {b.name.split(' (')[0]}
                     </text>
+
                     <text
                       x={b.canvasBounds.x + b.canvasBounds.width / 2}
-                      y={b.canvasBounds.y + 80}
+                      y={b.canvasBounds.y + 98}
                       textAnchor="middle"
                       fill="#64748b"
                       fontSize="10"
                       fontWeight="600"
                     >
-                      Floors: {floorCodes}
+                      {floorCodes}
                     </text>
 
-                    <rect
-                      x={b.canvasBounds.x + b.canvasBounds.width / 2 - 60}
-                      y={b.canvasBounds.y + 115}
-                      width="120"
-                      height="24"
-                      rx="6"
-                      fill="#f1f5f9"
-                      stroke="#cbd5e1"
-                      strokeWidth="1"
-                    />
+                    {/* Subtle Open Blueprint Hint */}
                     <text
                       x={b.canvasBounds.x + b.canvasBounds.width / 2}
-                      y={b.canvasBounds.y + 131}
+                      y={b.canvasBounds.y + 132}
                       textAnchor="middle"
-                      fill="#0f3b7a"
+                      fill="#2563eb"
                       fontSize="10"
-                      fontWeight="700"
+                      fontWeight="600"
                     >
-                      View Floor Plans →
+                      Open floor plan →
                     </text>
                   </g>
                 );
@@ -734,16 +732,16 @@ export const CampusMap: React.FC = () => {
           ) : (
             /* 2. INDOOR FLOOR PLAN VIEW */
             <g id="indoorFloorPlan">
-              <rect x="0" y="0" width="1000" height="650" fill="#f8fafc" />
+              <rect x="-400" y="-300" width="1800" height="1300" fill="#eef1ec" />
 
               {currentFloor?.floorMapImage && (
-                <g id="blueprintLayer">
+                <g id="blueprintLayer" filter="url(#bldgShadow)">
                   <rect
                     x="10"
                     y="10"
                     width="980"
                     height="630"
-                    rx="12"
+                    rx="16"
                     fill="#ffffff"
                     stroke="#cbd5e1"
                     strokeWidth="1.5"
