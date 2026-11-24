@@ -1,0 +1,3734 @@
+{
+  "collegeName": "Canara Engineering College",
+  "campusLocation": "Sudhindra Nagar, Benjanapadavu, Bantwal Taluk, Karnataka 574219",
+  "version": "2.0.0",
+  "lastUpdated": "2026-11-24T06:22:09.148Z",
+  "floors": [
+    {
+      "id": "ground",
+      "name": "Ground Floor",
+      "shortName": "Ground",
+      "floorNumber": 0,
+      "image": "/assets/aistudio/1000073941_367166a1.jpg",
+      "scale": 1,
+      "description": "Main Entry Lobby, Classrooms 01–09, HOD Offices, Staff Rooms 01–03 & Lift-02"
+    },
+    {
+      "id": "first",
+      "name": "1st Floor",
+      "shortName": "1st",
+      "floorNumber": 1,
+      "image": "/assets/aistudio/1000073949_21a5a4cc.jpg",
+      "scale": 1,
+      "description": "Classrooms 01–09, HOD Suites, Staff Rooms 01–03, Central Staircase & Lift-02"
+    },
+    {
+      "id": "second",
+      "name": "2nd Floor",
+      "shortName": "2nd",
+      "floorNumber": 2,
+      "image": "/assets/aistudio/1000073957_ddb04104.jpg",
+      "scale": 1,
+      "description": "Classrooms 01–08, Staff Rooms 01–03, Central Lobby & Lift-02"
+    },
+    {
+      "id": "third",
+      "name": "3rd Floor",
+      "shortName": "3rd",
+      "floorNumber": 3,
+      "image": "/assets/aistudio/1000073959_ac649ee1.jpg",
+      "scale": 1,
+      "description": "Classrooms 01–07, Staffroom, Ladies & Gents Toilets, Maintenance & Lift-03"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node_out_gate",
+      "floor": "ground",
+      "x": 500,
+      "y": 560,
+      "type": "entrance",
+      "name": "Main Campus Gate",
+      "building": "outdoor"
+    },
+    {
+      "id": "node_out_plaza",
+      "floor": "ground",
+      "x": 500,
+      "y": 420,
+      "type": "corridor junction",
+      "name": "Central Campus Walkway",
+      "building": "outdoor"
+    },
+    {
+      "id": "node_out_west",
+      "floor": "ground",
+      "x": 210,
+      "y": 420,
+      "type": "corridor junction",
+      "name": "Library Avenue",
+      "building": "outdoor"
+    },
+    {
+      "id": "node_out_east",
+      "floor": "ground",
+      "x": 795,
+      "y": 420,
+      "type": "office",
+      "name": "Admin Avenue",
+      "building": "outdoor"
+    },
+    {
+      "id": "node_lib_ent",
+      "floor": "ground",
+      "x": 210,
+      "y": 310,
+      "type": "entrance",
+      "name": "Library Block Entrance",
+      "building": "block_library"
+    },
+    {
+      "id": "node_crb_ent",
+      "floor": "ground",
+      "x": 505,
+      "y": 310,
+      "type": "entrance",
+      "name": "Class Room Block Entrance",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_adm_ent",
+      "floor": "ground",
+      "x": 795,
+      "y": 310,
+      "type": "entrance",
+      "name": "Admin Block Entrance",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_lib_gf_foyer",
+      "floor": "ground",
+      "x": 448,
+      "y": 420,
+      "type": "corridor junction",
+      "name": "Library GF South Corridor",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_corridor",
+      "floor": "ground",
+      "x": 448,
+      "y": 310,
+      "type": "corridor junction",
+      "name": "Library GF Central Corridor",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_corridor_n",
+      "floor": "ground",
+      "x": 448,
+      "y": 245,
+      "type": "corridor junction",
+      "name": "Library GF North Junction",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_corridor_e",
+      "floor": "ground",
+      "x": 625,
+      "y": 300,
+      "type": "entrance",
+      "name": "Library GF East Wing Entry",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_stair",
+      "floor": "ground",
+      "x": 498,
+      "y": 265,
+      "type": "stairs",
+      "name": "Library Staircase (GF)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_lift",
+      "floor": "ground",
+      "x": 492,
+      "y": 342,
+      "type": "lift",
+      "name": "Lift-01 (GF)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_office",
+      "floor": "ground",
+      "x": 340,
+      "y": 175,
+      "type": "office",
+      "name": "Office",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_stationary",
+      "floor": "ground",
+      "x": 270,
+      "y": 222,
+      "type": "canteen",
+      "name": "Stationary Room",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_store",
+      "floor": "ground",
+      "x": 360,
+      "y": 222,
+      "type": "canteen",
+      "name": "Store Room",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_hall",
+      "floor": "ground",
+      "x": 335,
+      "y": 340,
+      "type": "room",
+      "name": "Reading & Common Hall",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_ups",
+      "floor": "ground",
+      "x": 682,
+      "y": 225,
+      "type": "room",
+      "name": "Centralized UPS Room",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_gf_library",
+      "floor": "ground",
+      "x": 730,
+      "y": 375,
+      "type": "room",
+      "name": "Central Library",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_stair",
+      "floor": "third",
+      "x": 468,
+      "y": 300,
+      "type": "stairs",
+      "name": "Library Staircase (TF)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lift",
+      "floor": "third",
+      "x": 462,
+      "y": 392,
+      "type": "lift",
+      "name": "Lift (TF)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_corridor_c",
+      "floor": "third",
+      "x": 420,
+      "y": 268,
+      "type": "corridor junction",
+      "name": "Library TF Central Corridor",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_corridor_w",
+      "floor": "third",
+      "x": 250,
+      "y": 268,
+      "type": "corridor junction",
+      "name": "Library TF West Corridor",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_corridor_sw",
+      "floor": "third",
+      "x": 290,
+      "y": 400,
+      "type": "lab",
+      "name": "Library TF South Lab Hall",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_corridor_e",
+      "floor": "third",
+      "x": 605,
+      "y": 268,
+      "type": "corridor junction",
+      "name": "Library TF East Corridor",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_corridor_se",
+      "floor": "third",
+      "x": 660,
+      "y": 330,
+      "type": "corridor junction",
+      "name": "Library TF East Wing Hall",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab_nw1",
+      "floor": "third",
+      "x": 205,
+      "y": 185,
+      "type": "lab",
+      "name": "Computer Lab NW-1",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab_nw2",
+      "floor": "third",
+      "x": 375,
+      "y": 185,
+      "type": "lab",
+      "name": "Computer Lab NW-2",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_cubicles",
+      "floor": "third",
+      "x": 290,
+      "y": 330,
+      "type": "office",
+      "name": "Cubicles 01–08",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab_sw1",
+      "floor": "third",
+      "x": 235,
+      "y": 465,
+      "type": "lab",
+      "name": "Computer Lab 60 Cap (W)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab_sw2",
+      "floor": "third",
+      "x": 338,
+      "y": 465,
+      "type": "lab",
+      "name": "Computer Lab 60 Cap (E)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_staff",
+      "floor": "third",
+      "x": 688,
+      "y": 245,
+      "type": "office",
+      "name": "Staff Rooms (TF)",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab01",
+      "floor": "third",
+      "x": 765,
+      "y": 315,
+      "type": "lab",
+      "name": "Lab-01",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab02",
+      "floor": "third",
+      "x": 710,
+      "y": 410,
+      "type": "lab",
+      "name": "Lab-02",
+      "building": "block_library"
+    },
+    {
+      "id": "node_lib_tf_lab03",
+      "floor": "third",
+      "x": 625,
+      "y": 505,
+      "type": "lab",
+      "name": "Lab-03",
+      "building": "block_library"
+    },
+    {
+      "id": "node_crb_gf_lobby",
+      "floor": "ground",
+      "x": 432,
+      "y": 535,
+      "type": "corridor junction",
+      "name": "Class Room Block Main Lobby (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_lift",
+      "floor": "ground",
+      "x": 315,
+      "y": 460,
+      "type": "lift",
+      "name": "Lift-02 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_stair",
+      "floor": "ground",
+      "x": 390,
+      "y": 410,
+      "type": "stairs",
+      "name": "Central Staircase (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_corridor_c",
+      "floor": "ground",
+      "x": 432,
+      "y": 255,
+      "type": "corridor junction",
+      "name": "3.0m Corridor Center (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_corridor_w",
+      "floor": "ground",
+      "x": 290,
+      "y": 255,
+      "type": "corridor junction",
+      "name": "3.0m Corridor West (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_corridor_e",
+      "floor": "ground",
+      "x": 565,
+      "y": 255,
+      "type": "corridor junction",
+      "name": "3.0m Corridor East (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr01",
+      "floor": "ground",
+      "x": 338,
+      "y": 530,
+      "type": "room",
+      "name": "Class Room 01 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr02",
+      "floor": "ground",
+      "x": 235,
+      "y": 375,
+      "type": "room",
+      "name": "Class Room 02 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr03",
+      "floor": "ground",
+      "x": 190,
+      "y": 280,
+      "type": "room",
+      "name": "Class Room 03 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr04",
+      "floor": "ground",
+      "x": 205,
+      "y": 195,
+      "type": "room",
+      "name": "Class Room 04 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr05",
+      "floor": "ground",
+      "x": 365,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 05 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr06",
+      "floor": "ground",
+      "x": 495,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 06 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr07",
+      "floor": "ground",
+      "x": 630,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 07 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr08",
+      "floor": "ground",
+      "x": 515,
+      "y": 325,
+      "type": "room",
+      "name": "Class Room 08 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_cr09",
+      "floor": "ground",
+      "x": 538,
+      "y": 530,
+      "type": "room",
+      "name": "Class Room 09 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_hod",
+      "floor": "ground",
+      "x": 345,
+      "y": 310,
+      "type": "office",
+      "name": "HOD Cabins (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_staff1",
+      "floor": "ground",
+      "x": 355,
+      "y": 368,
+      "type": "office",
+      "name": "Staff Room 01 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_staff2",
+      "floor": "ground",
+      "x": 515,
+      "y": 425,
+      "type": "office",
+      "name": "Staff Rooms 02 & 03 (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_gf_kitchenette",
+      "floor": "ground",
+      "x": 605,
+      "y": 485,
+      "type": "canteen",
+      "name": "Kitchenette (GF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_lobby",
+      "floor": "first",
+      "x": 480,
+      "y": 535,
+      "type": "corridor junction",
+      "name": "Lobby (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_lift",
+      "floor": "first",
+      "x": 362,
+      "y": 460,
+      "type": "lift",
+      "name": "Lift-02 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_stair",
+      "floor": "first",
+      "x": 438,
+      "y": 405,
+      "type": "stairs",
+      "name": "Central Staircase (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_corridor_c",
+      "floor": "first",
+      "x": 480,
+      "y": 252,
+      "type": "corridor junction",
+      "name": "3.0m Corridor Center (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_corridor_w",
+      "floor": "first",
+      "x": 335,
+      "y": 252,
+      "type": "corridor junction",
+      "name": "3.0m Corridor West (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_corridor_e",
+      "floor": "first",
+      "x": 568,
+      "y": 252,
+      "type": "corridor junction",
+      "name": "3.0m Corridor East (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr01",
+      "floor": "first",
+      "x": 385,
+      "y": 530,
+      "type": "room",
+      "name": "Class Room 01 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr02",
+      "floor": "first",
+      "x": 280,
+      "y": 420,
+      "type": "room",
+      "name": "Class Room 02 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr03",
+      "floor": "first",
+      "x": 230,
+      "y": 310,
+      "type": "room",
+      "name": "Class Room 03 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr04",
+      "floor": "first",
+      "x": 245,
+      "y": 205,
+      "type": "room",
+      "name": "Class Room 04 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr05",
+      "floor": "first",
+      "x": 410,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 05 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr06",
+      "floor": "first",
+      "x": 545,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 06 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr07",
+      "floor": "first",
+      "x": 685,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 07 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr08",
+      "floor": "first",
+      "x": 565,
+      "y": 320,
+      "type": "room",
+      "name": "Class Room 08 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_cr09",
+      "floor": "first",
+      "x": 590,
+      "y": 530,
+      "type": "room",
+      "name": "Class Room 09 (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_hod",
+      "floor": "first",
+      "x": 392,
+      "y": 305,
+      "type": "office",
+      "name": "HOD Offices (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_ff_staff",
+      "floor": "first",
+      "x": 565,
+      "y": 420,
+      "type": "office",
+      "name": "Staff Rooms (FF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_lobby",
+      "floor": "second",
+      "x": 440,
+      "y": 485,
+      "type": "corridor junction",
+      "name": "Lobby (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_lift",
+      "floor": "second",
+      "x": 315,
+      "y": 445,
+      "type": "lift",
+      "name": "Lift-02 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_stair",
+      "floor": "second",
+      "x": 395,
+      "y": 395,
+      "type": "stairs",
+      "name": "Central Staircase (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_corridor_c",
+      "floor": "second",
+      "x": 440,
+      "y": 245,
+      "type": "corridor junction",
+      "name": "3.0m Corridor Center (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_corridor_w",
+      "floor": "second",
+      "x": 335,
+      "y": 245,
+      "type": "corridor junction",
+      "name": "3.0m Corridor West (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_corridor_e",
+      "floor": "second",
+      "x": 565,
+      "y": 245,
+      "type": "corridor junction",
+      "name": "3.0m Corridor East (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr01",
+      "floor": "second",
+      "x": 245,
+      "y": 425,
+      "type": "room",
+      "name": "Class Room 01 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr02",
+      "floor": "second",
+      "x": 225,
+      "y": 325,
+      "type": "room",
+      "name": "Class Room 02 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr03",
+      "floor": "second",
+      "x": 215,
+      "y": 215,
+      "type": "room",
+      "name": "Class Room 03 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr04",
+      "floor": "second",
+      "x": 380,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 04 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr05",
+      "floor": "second",
+      "x": 515,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 05 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr06",
+      "floor": "second",
+      "x": 655,
+      "y": 145,
+      "type": "room",
+      "name": "Class Room 06 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_staff",
+      "floor": "second",
+      "x": 365,
+      "y": 325,
+      "type": "office",
+      "name": "Staffroom (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_staff2",
+      "floor": "second",
+      "x": 525,
+      "y": 420,
+      "type": "office",
+      "name": "Staff Rooms 02 & 03 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_sf_cr08",
+      "floor": "second",
+      "x": 525,
+      "y": 310,
+      "type": "room",
+      "name": "Class Room 07/08 (SF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_lift",
+      "floor": "third",
+      "x": 368,
+      "y": 515,
+      "type": "lift",
+      "name": "Lift-03 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_stair",
+      "floor": "third",
+      "x": 465,
+      "y": 455,
+      "type": "stairs",
+      "name": "Central Staircase (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_corridor_c",
+      "floor": "third",
+      "x": 520,
+      "y": 285,
+      "type": "corridor junction",
+      "name": "3.0m Corridor Center (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_corridor_w",
+      "floor": "third",
+      "x": 390,
+      "y": 285,
+      "type": "corridor junction",
+      "name": "3.0m Corridor West (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_corridor_e",
+      "floor": "third",
+      "x": 660,
+      "y": 285,
+      "type": "corridor junction",
+      "name": "3.0m Corridor East (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr01",
+      "floor": "third",
+      "x": 255,
+      "y": 455,
+      "type": "room",
+      "name": "Class Room 01 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr02",
+      "floor": "third",
+      "x": 225,
+      "y": 325,
+      "type": "room",
+      "name": "Class Room 02 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr03",
+      "floor": "third",
+      "x": 235,
+      "y": 205,
+      "type": "room",
+      "name": "Class Room 03 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr04",
+      "floor": "third",
+      "x": 420,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 04 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr05",
+      "floor": "third",
+      "x": 590,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 05 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr06",
+      "floor": "third",
+      "x": 750,
+      "y": 155,
+      "type": "room",
+      "name": "Class Room 06 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_staff",
+      "floor": "third",
+      "x": 420,
+      "y": 365,
+      "type": "office",
+      "name": "Staffroom (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_cr07",
+      "floor": "third",
+      "x": 625,
+      "y": 380,
+      "type": "room",
+      "name": "Class Room 07 (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_ladies_toilet",
+      "floor": "third",
+      "x": 630,
+      "y": 450,
+      "type": "washroom",
+      "name": "Ladies Toilet (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_crb_tf_gents_toilet",
+      "floor": "third",
+      "x": 630,
+      "y": 545,
+      "type": "washroom",
+      "name": "Gents Toilet (TF)",
+      "building": "block_classroom"
+    },
+    {
+      "id": "node_adm_gf_foyer",
+      "floor": "ground",
+      "x": 500,
+      "y": 460,
+      "type": "entrance",
+      "name": "Admin GF Reception Foyer",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_gf_stair",
+      "floor": "ground",
+      "x": 510,
+      "y": 205,
+      "type": "stairs",
+      "name": "Admin Staircase (GF)",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_stair",
+      "floor": "second",
+      "x": 510,
+      "y": 205,
+      "type": "stairs",
+      "name": "Admin Staircase (SF)",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_corridor_c",
+      "floor": "second",
+      "x": 510,
+      "y": 245,
+      "type": "office",
+      "name": "Admin SF Central Corridor",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_corridor_w",
+      "floor": "second",
+      "x": 350,
+      "y": 245,
+      "type": "office",
+      "name": "Admin SF West Corridor",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_corridor_sw",
+      "floor": "second",
+      "x": 255,
+      "y": 315,
+      "type": "office",
+      "name": "Admin SF South-West Wing Corridor",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_corridor_e",
+      "floor": "second",
+      "x": 635,
+      "y": 245,
+      "type": "office",
+      "name": "Admin SF East Corridor",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_cl2",
+      "floor": "second",
+      "x": 355,
+      "y": 145,
+      "type": "lab",
+      "name": "Computer Lab 02 (48 Cap)",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_cl60",
+      "floor": "second",
+      "x": 238,
+      "y": 185,
+      "type": "lab",
+      "name": "Computer Lab (60 Cap)",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_pc01",
+      "floor": "second",
+      "x": 485,
+      "y": 300,
+      "type": "lab",
+      "name": "Lab PC-01",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_pc02",
+      "floor": "second",
+      "x": 480,
+      "y": 145,
+      "type": "lab",
+      "name": "Lab PC-02",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_pc03",
+      "floor": "second",
+      "x": 660,
+      "y": 145,
+      "type": "lab",
+      "name": "Lab PC-03",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_pc04",
+      "floor": "second",
+      "x": 655,
+      "y": 300,
+      "type": "lab",
+      "name": "Lab PC-04",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_staff",
+      "floor": "second",
+      "x": 575,
+      "y": 145,
+      "type": "office",
+      "name": "Admin SF Staff Room",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_proj_lab",
+      "floor": "second",
+      "x": 245,
+      "y": 415,
+      "type": "lab",
+      "name": "Physics / Project Lab",
+      "building": "block_admin"
+    },
+    {
+      "id": "node_adm_sf_toilet",
+      "floor": "second",
+      "x": 180,
+      "y": 255,
+      "type": "washroom",
+      "name": "Gents Toilet (Admin SF)",
+      "building": "block_admin"
+    }
+  ],
+  "edges": [
+    {
+      "id": "co_gate_plaza",
+      "source": "node_out_gate",
+      "target": "node_out_plaza",
+      "distance": 25,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "co_plaza_crb",
+      "source": "node_out_plaza",
+      "target": "node_crb_ent",
+      "distance": 20,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "co_plaza_west",
+      "source": "node_out_plaza",
+      "target": "node_out_west",
+      "distance": 45,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "co_west_lib",
+      "source": "node_out_west",
+      "target": "node_lib_ent",
+      "distance": 20,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "co_plaza_east",
+      "source": "node_out_plaza",
+      "target": "node_out_east",
+      "distance": 45,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "co_east_adm",
+      "source": "node_out_east",
+      "target": "node_adm_ent",
+      "distance": 20,
+      "type": "outdoor",
+      "accessible": true
+    },
+    {
+      "id": "clib_ent",
+      "source": "node_lib_ent",
+      "target": "node_lib_gf_foyer",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_1",
+      "source": "node_lib_gf_foyer",
+      "target": "node_lib_gf_corridor",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_2",
+      "source": "node_lib_gf_corridor",
+      "target": "node_lib_gf_corridor_n",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_3",
+      "source": "node_lib_gf_corridor",
+      "target": "node_lib_gf_stair",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_4",
+      "source": "node_lib_gf_corridor",
+      "target": "node_lib_gf_lift",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_5",
+      "source": "node_lib_gf_corridor",
+      "target": "node_lib_gf_corridor_e",
+      "distance": 20,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_off",
+      "source": "node_lib_gf_corridor_n",
+      "target": "node_lib_gf_office",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_stat",
+      "source": "node_lib_gf_corridor_n",
+      "target": "node_lib_gf_stationary",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_str",
+      "source": "node_lib_gf_corridor_n",
+      "target": "node_lib_gf_store",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_hall",
+      "source": "node_lib_gf_corridor",
+      "target": "node_lib_gf_hall",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_ups",
+      "source": "node_lib_gf_corridor_e",
+      "target": "node_lib_gf_ups",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_gf_lib",
+      "source": "node_lib_gf_corridor_e",
+      "target": "node_lib_gf_library",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_stair_gf_tf",
+      "source": "node_lib_gf_stair",
+      "target": "node_lib_tf_stair",
+      "distance": 18,
+      "type": "stairs",
+      "accessible": false
+    },
+    {
+      "id": "clib_lift_gf_tf",
+      "source": "node_lib_gf_lift",
+      "target": "node_lib_tf_lift",
+      "distance": 22,
+      "type": "lift",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_1",
+      "source": "node_lib_tf_stair",
+      "target": "node_lib_tf_corridor_c",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_2",
+      "source": "node_lib_tf_lift",
+      "target": "node_lib_tf_corridor_c",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_3",
+      "source": "node_lib_tf_corridor_c",
+      "target": "node_lib_tf_corridor_w",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_4",
+      "source": "node_lib_tf_corridor_w",
+      "target": "node_lib_tf_corridor_sw",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_5",
+      "source": "node_lib_tf_corridor_c",
+      "target": "node_lib_tf_corridor_e",
+      "distance": 20,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_6",
+      "source": "node_lib_tf_corridor_e",
+      "target": "node_lib_tf_corridor_se",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_nw1",
+      "source": "node_lib_tf_corridor_w",
+      "target": "node_lib_tf_lab_nw1",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_nw2",
+      "source": "node_lib_tf_corridor_c",
+      "target": "node_lib_tf_lab_nw2",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_cub",
+      "source": "node_lib_tf_corridor_w",
+      "target": "node_lib_tf_cubicles",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_sw1",
+      "source": "node_lib_tf_corridor_sw",
+      "target": "node_lib_tf_lab_sw1",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_sw2",
+      "source": "node_lib_tf_corridor_sw",
+      "target": "node_lib_tf_lab_sw2",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_stf",
+      "source": "node_lib_tf_corridor_e",
+      "target": "node_lib_tf_staff",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_l1",
+      "source": "node_lib_tf_corridor_se",
+      "target": "node_lib_tf_lab01",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_l2",
+      "source": "node_lib_tf_corridor_se",
+      "target": "node_lib_tf_lab02",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "clib_tf_l3",
+      "source": "node_lib_tf_corridor_se",
+      "target": "node_lib_tf_lab03",
+      "distance": 20,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ent",
+      "source": "node_crb_ent",
+      "target": "node_crb_gf_lobby",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_1",
+      "source": "node_crb_gf_lobby",
+      "target": "node_crb_gf_stair",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_2",
+      "source": "node_crb_gf_lobby",
+      "target": "node_crb_gf_lift",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_3",
+      "source": "node_crb_gf_stair",
+      "target": "node_crb_gf_corridor_c",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_4",
+      "source": "node_crb_gf_corridor_c",
+      "target": "node_crb_gf_corridor_w",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_5",
+      "source": "node_crb_gf_corridor_c",
+      "target": "node_crb_gf_corridor_e",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r1",
+      "source": "node_crb_gf_lobby",
+      "target": "node_crb_gf_cr01",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r9",
+      "source": "node_crb_gf_lobby",
+      "target": "node_crb_gf_cr09",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_kit",
+      "source": "node_crb_gf_lobby",
+      "target": "node_crb_gf_kitchenette",
+      "distance": 20,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r2",
+      "source": "node_crb_gf_corridor_w",
+      "target": "node_crb_gf_cr02",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r3",
+      "source": "node_crb_gf_corridor_w",
+      "target": "node_crb_gf_cr03",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r4",
+      "source": "node_crb_gf_corridor_w",
+      "target": "node_crb_gf_cr04",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r5",
+      "source": "node_crb_gf_corridor_c",
+      "target": "node_crb_gf_cr05",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r6",
+      "source": "node_crb_gf_corridor_c",
+      "target": "node_crb_gf_cr06",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r7",
+      "source": "node_crb_gf_corridor_e",
+      "target": "node_crb_gf_cr07",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_r8",
+      "source": "node_crb_gf_corridor_e",
+      "target": "node_crb_gf_cr08",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_hod",
+      "source": "node_crb_gf_corridor_w",
+      "target": "node_crb_gf_hod",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_s1",
+      "source": "node_crb_gf_stair",
+      "target": "node_crb_gf_staff1",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_gf_s2",
+      "source": "node_crb_gf_corridor_e",
+      "target": "node_crb_gf_staff2",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_stair_0_1",
+      "source": "node_crb_gf_stair",
+      "target": "node_crb_ff_stair",
+      "distance": 8,
+      "type": "stairs",
+      "accessible": false
+    },
+    {
+      "id": "ccrb_stair_1_2",
+      "source": "node_crb_ff_stair",
+      "target": "node_crb_sf_stair",
+      "distance": 8,
+      "type": "stairs",
+      "accessible": false
+    },
+    {
+      "id": "ccrb_stair_2_3",
+      "source": "node_crb_sf_stair",
+      "target": "node_crb_tf_stair",
+      "distance": 8,
+      "type": "stairs",
+      "accessible": false
+    },
+    {
+      "id": "ccrb_lift_0_1",
+      "source": "node_crb_gf_lift",
+      "target": "node_crb_ff_lift",
+      "distance": 10,
+      "type": "lift",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_lift_1_2",
+      "source": "node_crb_ff_lift",
+      "target": "node_crb_sf_lift",
+      "distance": 10,
+      "type": "lift",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_lift_2_3",
+      "source": "node_crb_sf_lift",
+      "target": "node_crb_tf_lift",
+      "distance": 10,
+      "type": "lift",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_1",
+      "source": "node_crb_ff_lobby",
+      "target": "node_crb_ff_stair",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_2",
+      "source": "node_crb_ff_lobby",
+      "target": "node_crb_ff_lift",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_3",
+      "source": "node_crb_ff_stair",
+      "target": "node_crb_ff_corridor_c",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_3w",
+      "source": "node_crb_ff_corridor_c",
+      "target": "node_crb_ff_corridor_w",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_lift_w",
+      "source": "node_crb_ff_lift",
+      "target": "node_crb_ff_corridor_w",
+      "distance": 20,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_4",
+      "source": "node_crb_ff_corridor_c",
+      "target": "node_crb_ff_corridor_e",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r1",
+      "source": "node_crb_ff_lobby",
+      "target": "node_crb_ff_cr01",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r2",
+      "source": "node_crb_ff_corridor_w",
+      "target": "node_crb_ff_cr02",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r3",
+      "source": "node_crb_ff_corridor_w",
+      "target": "node_crb_ff_cr03",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r4",
+      "source": "node_crb_ff_corridor_w",
+      "target": "node_crb_ff_cr04",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r5",
+      "source": "node_crb_ff_corridor_c",
+      "target": "node_crb_ff_cr05",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r6",
+      "source": "node_crb_ff_corridor_e",
+      "target": "node_crb_ff_cr06",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r7",
+      "source": "node_crb_ff_corridor_e",
+      "target": "node_crb_ff_cr07",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r8",
+      "source": "node_crb_ff_corridor_e",
+      "target": "node_crb_ff_cr08",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_r9",
+      "source": "node_crb_ff_lobby",
+      "target": "node_crb_ff_cr09",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_hod",
+      "source": "node_crb_ff_corridor_c",
+      "target": "node_crb_ff_hod",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_ff_stf",
+      "source": "node_crb_ff_corridor_e",
+      "target": "node_crb_ff_staff",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_1",
+      "source": "node_crb_sf_lobby",
+      "target": "node_crb_sf_stair",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_2",
+      "source": "node_crb_sf_lobby",
+      "target": "node_crb_sf_lift",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_3",
+      "source": "node_crb_sf_stair",
+      "target": "node_crb_sf_corridor_c",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_4",
+      "source": "node_crb_sf_corridor_c",
+      "target": "node_crb_sf_corridor_w",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_lift_w",
+      "source": "node_crb_sf_lift",
+      "target": "node_crb_sf_corridor_w",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_4e",
+      "source": "node_crb_sf_corridor_c",
+      "target": "node_crb_sf_corridor_e",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r1",
+      "source": "node_crb_sf_corridor_w",
+      "target": "node_crb_sf_cr01",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r2",
+      "source": "node_crb_sf_corridor_w",
+      "target": "node_crb_sf_cr02",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r3",
+      "source": "node_crb_sf_corridor_w",
+      "target": "node_crb_sf_cr03",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r4",
+      "source": "node_crb_sf_corridor_w",
+      "target": "node_crb_sf_cr04",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r5",
+      "source": "node_crb_sf_corridor_c",
+      "target": "node_crb_sf_cr05",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r6",
+      "source": "node_crb_sf_corridor_e",
+      "target": "node_crb_sf_cr06",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_stf",
+      "source": "node_crb_sf_corridor_w",
+      "target": "node_crb_sf_staff",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_stf2",
+      "source": "node_crb_sf_corridor_e",
+      "target": "node_crb_sf_staff2",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_sf_r8",
+      "source": "node_crb_sf_corridor_c",
+      "target": "node_crb_sf_cr08",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_1",
+      "source": "node_crb_tf_stair",
+      "target": "node_crb_tf_lift",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_lift_w",
+      "source": "node_crb_tf_lift",
+      "target": "node_crb_tf_corridor_w",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_lift_c",
+      "source": "node_crb_tf_lift",
+      "target": "node_crb_tf_corridor_c",
+      "distance": 16,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_2",
+      "source": "node_crb_tf_stair",
+      "target": "node_crb_tf_corridor_c",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_3",
+      "source": "node_crb_tf_corridor_c",
+      "target": "node_crb_tf_corridor_w",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_3e",
+      "source": "node_crb_tf_corridor_c",
+      "target": "node_crb_tf_corridor_e",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r1",
+      "source": "node_crb_tf_corridor_w",
+      "target": "node_crb_tf_cr01",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r2",
+      "source": "node_crb_tf_corridor_w",
+      "target": "node_crb_tf_cr02",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r3",
+      "source": "node_crb_tf_corridor_w",
+      "target": "node_crb_tf_cr03",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r4",
+      "source": "node_crb_tf_corridor_w",
+      "target": "node_crb_tf_cr04",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r5",
+      "source": "node_crb_tf_corridor_c",
+      "target": "node_crb_tf_cr05",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r6",
+      "source": "node_crb_tf_corridor_e",
+      "target": "node_crb_tf_cr06",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_stf",
+      "source": "node_crb_tf_corridor_w",
+      "target": "node_crb_tf_staff",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_r7",
+      "source": "node_crb_tf_corridor_c",
+      "target": "node_crb_tf_cr07",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_wc1",
+      "source": "node_crb_tf_cr07",
+      "target": "node_crb_tf_ladies_toilet",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "ccrb_tf_wc2",
+      "source": "node_crb_tf_ladies_toilet",
+      "target": "node_crb_tf_gents_toilet",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_ent",
+      "source": "node_adm_ent",
+      "target": "node_adm_gf_foyer",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_gf_1",
+      "source": "node_adm_gf_foyer",
+      "target": "node_adm_gf_stair",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_stair_gf_sf",
+      "source": "node_adm_gf_stair",
+      "target": "node_adm_sf_stair",
+      "distance": 14,
+      "type": "stairs",
+      "accessible": false
+    },
+    {
+      "id": "cadm_sf_1",
+      "source": "node_adm_sf_stair",
+      "target": "node_adm_sf_corridor_c",
+      "distance": 6,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_2",
+      "source": "node_adm_sf_corridor_c",
+      "target": "node_adm_sf_corridor_w",
+      "distance": 18,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_3",
+      "source": "node_adm_sf_corridor_w",
+      "target": "node_adm_sf_corridor_sw",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_4",
+      "source": "node_adm_sf_corridor_c",
+      "target": "node_adm_sf_corridor_e",
+      "distance": 15,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_cl2",
+      "source": "node_adm_sf_corridor_w",
+      "target": "node_adm_sf_cl2",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_cl60",
+      "source": "node_adm_sf_corridor_w",
+      "target": "node_adm_sf_cl60",
+      "distance": 14,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_pc01",
+      "source": "node_adm_sf_corridor_c",
+      "target": "node_adm_sf_pc01",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_pc02",
+      "source": "node_adm_sf_corridor_c",
+      "target": "node_adm_sf_pc02",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_pc03",
+      "source": "node_adm_sf_corridor_e",
+      "target": "node_adm_sf_pc03",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_pc04",
+      "source": "node_adm_sf_corridor_e",
+      "target": "node_adm_sf_pc04",
+      "distance": 8,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_stf",
+      "source": "node_adm_sf_corridor_e",
+      "target": "node_adm_sf_staff",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_proj",
+      "source": "node_adm_sf_corridor_sw",
+      "target": "node_adm_sf_proj_lab",
+      "distance": 12,
+      "type": "corridor",
+      "accessible": true
+    },
+    {
+      "id": "cadm_sf_wc",
+      "source": "node_adm_sf_corridor_sw",
+      "target": "node_adm_sf_toilet",
+      "distance": 10,
+      "type": "corridor",
+      "accessible": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": "loc_lib_gf_library",
+      "number": "LIB-GF-01",
+      "name": "Central Library (15.20 x 24.45m)",
+      "department": "Central Library",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_library",
+      "category": "classroom",
+      "keywords": [
+        "lib-gf-01",
+        "libgf01",
+        "central library (15.20 x 24.45m)",
+        "classroom",
+        "ground",
+        "central library",
+        "library",
+        "books",
+        "reading",
+        "reference",
+        "study"
+      ],
+      "description": "Main engineering library reading hall, book stacks, and reference zone in the east wing.",
+      "hint": "Ground Floor: Main engineering library reading hall, book stacks, and reference zone in the east wing."
+    },
+    {
+      "id": "loc_lib_gf_office",
+      "number": "LIB-GF-OFF",
+      "name": "Library Block Main Office (24.25 x 8.50m)",
+      "department": "Information Science & Engineering",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_office",
+      "category": "office",
+      "keywords": [
+        "lib-gf-off",
+        "libgfoff",
+        "library block main office (24.25 x 8.50m)",
+        "office",
+        "ground",
+        "information science & engineering",
+        "library office",
+        "admin"
+      ],
+      "description": "Administrative office located on the north side of Library Block Ground Floor.",
+      "hint": "Ground Floor: Administrative office located on the north side of Library Block Ground Floor."
+    },
+    {
+      "id": "loc_lib_gf_stationary",
+      "number": "LIB-GF-STAT",
+      "name": "Stationary Room (8.95 x 2.75m)",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_stationary",
+      "category": "office",
+      "keywords": [
+        "lib-gf-stat",
+        "libgfstat",
+        "stationary room (8.95 x 2.75m)",
+        "office",
+        "ground",
+        "electronics & communication",
+        "stationary",
+        "stationery",
+        "supplies",
+        "records"
+      ],
+      "description": "Campus stationary, records, and notebooks room beside the store room.",
+      "hint": "Ground Floor: Campus stationary, records, and notebooks room beside the store room."
+    },
+    {
+      "id": "loc_lib_gf_store",
+      "number": "LIB-GF-STR",
+      "name": "Store Room (7.30 x 2.75m)",
+      "department": "College Administration",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_store",
+      "category": "canteen",
+      "keywords": [
+        "lib-gf-str",
+        "libgfstr",
+        "store room (7.30 x 2.75m)",
+        "canteen",
+        "ground",
+        "college administration",
+        "store",
+        "storage"
+      ],
+      "description": "Equipment and stock store room adjacent to the stationary room.",
+      "hint": "Ground Floor: Equipment and stock store room adjacent to the stationary room."
+    },
+    {
+      "id": "loc_lib_gf_hall",
+      "number": "LIB-GF-HALL",
+      "name": "Library Reading & Common Hall",
+      "department": "Central Library",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_hall",
+      "category": "classroom",
+      "keywords": [
+        "lib-gf-hall",
+        "libgfhall",
+        "library reading & common hall",
+        "classroom",
+        "ground",
+        "central library",
+        "hall",
+        "reading hall",
+        "seminar"
+      ],
+      "description": "Large pillared ground floor hall adjacent to the central corridor and fire exit.",
+      "hint": "Ground Floor: Large pillared ground floor hall adjacent to the central corridor and fire exit."
+    },
+    {
+      "id": "loc_lib_gf_ups",
+      "number": "LIB-GF-UPS",
+      "name": "Centralized UPS Room (5.27 x 3.60m)",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_lib_gf_ups",
+      "category": "lab",
+      "keywords": [
+        "lib-gf-ups",
+        "libgfups",
+        "centralized ups room (5.27 x 3.60m)",
+        "lab",
+        "ground",
+        "electronics & communication",
+        "ups",
+        "power",
+        "electrical"
+      ],
+      "description": "Central campus power backup and UPS distribution room next to the Library.",
+      "hint": "Ground Floor: Central campus power backup and UPS distribution room next to the Library."
+    },
+    {
+      "id": "loc_lib_tf_lab_nw1",
+      "number": "LIB-TF-CL1",
+      "name": "Computer Lab NW-1 (Library TF)",
+      "department": "Computer Science & Engineering",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab_nw1",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-cl1",
+        "libtfcl1",
+        "computer lab nw-1 (library tf)",
+        "lab",
+        "third",
+        "computer science & engineering",
+        "computer lab",
+        "library tf",
+        "programming"
+      ],
+      "description": "North-west Computer Laboratory on Library Block Third Floor.",
+      "hint": "3rd Floor: North-west Computer Laboratory on Library Block Third Floor."
+    },
+    {
+      "id": "loc_lib_tf_lab_nw2",
+      "number": "LIB-TF-CL2",
+      "name": "Computer Lab NW-2 (Library TF)",
+      "department": "Computer Science & Engineering",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab_nw2",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-cl2",
+        "libtfcl2",
+        "computer lab nw-2 (library tf)",
+        "lab",
+        "third",
+        "computer science & engineering",
+        "computer lab",
+        "library tf"
+      ],
+      "description": "North-central Computer Laboratory on Library Block Third Floor.",
+      "hint": "3rd Floor: North-central Computer Laboratory on Library Block Third Floor."
+    },
+    {
+      "id": "loc_lib_tf_cubicles",
+      "number": "LIB-TF-CUB",
+      "name": "Faculty Cubicles 01–08 (Library TF)",
+      "department": "Computer Science & Engineering",
+      "floor": "third",
+      "nodeId": "node_lib_tf_cubicles",
+      "category": "office",
+      "keywords": [
+        "lib-tf-cub",
+        "libtfcub",
+        "faculty cubicles 01–08 (library tf)",
+        "office",
+        "third",
+        "computer science & engineering",
+        "cubicles",
+        "faculty",
+        "staff"
+      ],
+      "description": "Eight individual faculty workstations across the corridor from Computer Labs.",
+      "hint": "3rd Floor: Eight individual faculty workstations across the corridor from Computer Labs."
+    },
+    {
+      "id": "loc_lib_tf_lab_sw1",
+      "number": "LIB-TF-CL3",
+      "name": "Computer Lab (60 Capacity) – West",
+      "department": "Computer Science & Engineering",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab_sw1",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-cl3",
+        "libtfcl3",
+        "computer lab (60 capacity) – west",
+        "lab",
+        "third",
+        "computer science & engineering",
+        "computer lab",
+        "60 capacity"
+      ],
+      "description": "60-seat high-capacity computer lab in the south-west wing of Library TF.",
+      "hint": "3rd Floor: 60-seat high-capacity computer lab in the south-west wing of Library TF."
+    },
+    {
+      "id": "loc_lib_tf_lab_sw2",
+      "number": "LIB-TF-CL4",
+      "name": "Computer Lab (60 Capacity) – East",
+      "department": "Computer Science & Engineering",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab_sw2",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-cl4",
+        "libtfcl4",
+        "computer lab (60 capacity) – east",
+        "lab",
+        "third",
+        "computer science & engineering",
+        "computer lab",
+        "60 capacity"
+      ],
+      "description": "60-seat computer lab next to the main elevator/staircase lobby on Library TF.",
+      "hint": "3rd Floor: 60-seat computer lab next to the main elevator/staircase lobby on Library TF."
+    },
+    {
+      "id": "loc_lib_tf_staff",
+      "number": "LIB-TF-STF",
+      "name": "Staff Rooms (Library TF East Wing)",
+      "department": "Central Library",
+      "floor": "third",
+      "nodeId": "node_lib_tf_staff",
+      "category": "office",
+      "keywords": [
+        "lib-tf-stf",
+        "libtfstf",
+        "staff rooms (library tf east wing)",
+        "office",
+        "third",
+        "central library",
+        "staff room",
+        "faculty",
+        "library tf"
+      ],
+      "description": "Three dedicated faculty staff rooms along the east wing of Library Third Floor.",
+      "hint": "3rd Floor: Three dedicated faculty staff rooms along the east wing of Library Third Floor."
+    },
+    {
+      "id": "loc_lib_tf_lab01",
+      "number": "LIB-TF-L01",
+      "name": "Lab-01 (Library TF East Wing)",
+      "department": "Central Library",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab01",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-l01",
+        "libtfl01",
+        "lab-01 (library tf east wing)",
+        "lab",
+        "third",
+        "central library",
+        "lab 01",
+        "lab-01",
+        "laboratory"
+      ],
+      "description": "East wing engineering laboratory Lab-01 on Library Block Third Floor.",
+      "hint": "3rd Floor: East wing engineering laboratory Lab-01 on Library Block Third Floor."
+    },
+    {
+      "id": "loc_lib_tf_lab02",
+      "number": "LIB-TF-L02",
+      "name": "Lab-02 (Library TF East Wing)",
+      "department": "Central Library",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab02",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-l02",
+        "libtfl02",
+        "lab-02 (library tf east wing)",
+        "lab",
+        "third",
+        "central library",
+        "lab 02",
+        "lab-02",
+        "laboratory"
+      ],
+      "description": "Middle east wing laboratory Lab-02 on Library Block Third Floor.",
+      "hint": "3rd Floor: Middle east wing laboratory Lab-02 on Library Block Third Floor."
+    },
+    {
+      "id": "loc_lib_tf_lab03",
+      "number": "LIB-TF-L03",
+      "name": "Lab-03 (Library TF East Wing)",
+      "department": "Central Library",
+      "floor": "third",
+      "nodeId": "node_lib_tf_lab03",
+      "category": "lab",
+      "keywords": [
+        "lib-tf-l03",
+        "libtfl03",
+        "lab-03 (library tf east wing)",
+        "lab",
+        "third",
+        "central library",
+        "lab 03",
+        "lab-03",
+        "laboratory"
+      ],
+      "description": "South-east laboratory Lab-03 on Library Block Third Floor.",
+      "hint": "3rd Floor: South-east laboratory Lab-03 on Library Block Third Floor."
+    },
+    {
+      "id": "loc_crb_gf_cr01",
+      "number": "CRB-GF-01",
+      "name": "Class Room 01 (72 Capacity) – GF",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr01",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-01",
+        "crbgf01",
+        "class room 01 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "electronics & communication",
+        "classroom 01",
+        "class room 01",
+        "72 capacity",
+        "gf-01",
+        "room gf-01",
+        "cr gf-01"
+      ],
+      "description": "Ground floor lecture classroom adjacent to the Main Entry Lobby and Lift-02.",
+      "hint": "Ground Floor: Ground floor lecture classroom adjacent to the Main Entry Lobby and Lift-02."
+    },
+    {
+      "id": "loc_crb_gf_cr02",
+      "number": "CRB-GF-02",
+      "name": "Class Room 02 (72 Capacity) – GF",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr02",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-02",
+        "crbgf02",
+        "class room 02 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "electronics & communication",
+        "classroom 02",
+        "class room 02",
+        "72 capacity",
+        "gf-02",
+        "room gf-02",
+        "cr gf-02"
+      ],
+      "description": "West angled wing lecture hall (12.00 x 7.50m) on Ground Floor.",
+      "hint": "Ground Floor: West angled wing lecture hall (12.00 x 7.50m) on Ground Floor."
+    },
+    {
+      "id": "loc_crb_gf_cr03",
+      "number": "CRB-GF-03",
+      "name": "Class Room 03 (72 Capacity) – GF",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr03",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-03",
+        "crbgf03",
+        "class room 03 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "academic department",
+        "classroom 03",
+        "class room 03",
+        "gf-03",
+        "room gf-03",
+        "cr gf-03"
+      ],
+      "description": "West angled wing middle classroom on Ground Floor.",
+      "hint": "Ground Floor: West angled wing middle classroom on Ground Floor."
+    },
+    {
+      "id": "loc_crb_gf_cr04",
+      "number": "CRB-GF-04",
+      "name": "Class Room 04 (72 Capacity) – GF",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr04",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-04",
+        "crbgf04",
+        "class room 04 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "electronics & communication",
+        "classroom 04",
+        "class room 04",
+        "gf-04",
+        "room gf-04",
+        "cr gf-04"
+      ],
+      "description": "North-west corner lecture room (12.00 x 7.50m) on Ground Floor.",
+      "hint": "Ground Floor: North-west corner lecture room (12.00 x 7.50m) on Ground Floor."
+    },
+    {
+      "id": "loc_crb_gf_cr05",
+      "number": "CRB-GF-05",
+      "name": "Class Room 05 (72 Capacity) – GF",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr05",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-05",
+        "crbgf05",
+        "class room 05 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "academic department",
+        "classroom 05",
+        "class room 05",
+        "gf-05",
+        "room gf-05",
+        "cr gf-05"
+      ],
+      "description": "North wing classroom (12.00 x 7.50m) off the 3.0m wide corridor.",
+      "hint": "Ground Floor: North wing classroom (12.00 x 7.50m) off the 3.0m wide corridor."
+    },
+    {
+      "id": "loc_crb_gf_cr06",
+      "number": "CRB-GF-06",
+      "name": "Class Room 06 (72 Capacity) – GF",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr06",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-06",
+        "crbgf06",
+        "class room 06 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "academic department",
+        "classroom 06",
+        "class room 06",
+        "gf-06",
+        "room gf-06",
+        "cr gf-06"
+      ],
+      "description": "North wing central classroom (11.82 x 7.50m) on Ground Floor.",
+      "hint": "Ground Floor: North wing central classroom (11.82 x 7.50m) on Ground Floor."
+    },
+    {
+      "id": "loc_crb_gf_cr07",
+      "number": "CRB-GF-07",
+      "name": "Class Room 07 (New) – GF",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr07",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-07",
+        "crbgf07",
+        "class room 07 (new) – gf",
+        "classroom",
+        "ground",
+        "academic department",
+        "classroom 07",
+        "class room 07",
+        "new",
+        "gf-07",
+        "room gf-07",
+        "cr gf-07"
+      ],
+      "description": "North-east wing new classroom (11.87 x 7.50m) near the east fire exit.",
+      "hint": "Ground Floor: North-east wing new classroom (11.87 x 7.50m) near the east fire exit."
+    },
+    {
+      "id": "loc_crb_gf_cr08",
+      "number": "CRB-GF-08",
+      "name": "Class Room 08 (45 Capacity) – GF",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr08",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-08",
+        "crbgf08",
+        "class room 08 (45 capacity) – gf",
+        "classroom",
+        "ground",
+        "academic department",
+        "classroom 08",
+        "class room 08",
+        "45 capacity",
+        "gf-08",
+        "room gf-08",
+        "cr gf-08"
+      ],
+      "description": "45-seat classroom on the east side of the central lobby.",
+      "hint": "Ground Floor: 45-seat classroom on the east side of the central lobby."
+    },
+    {
+      "id": "loc_crb_gf_cr09",
+      "number": "CRB-GF-09",
+      "name": "Class Room 09 (72 Capacity) – GF",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_cr09",
+      "category": "classroom",
+      "keywords": [
+        "crb-gf-09",
+        "crbgf09",
+        "class room 09 (72 capacity) – gf",
+        "classroom",
+        "ground",
+        "electronics & communication",
+        "classroom 09",
+        "class room 09",
+        "gf-09",
+        "room gf-09",
+        "cr gf-09"
+      ],
+      "description": "South-east lecture room beside the main lobby and kitchenette.",
+      "hint": "Ground Floor: South-east lecture room beside the main lobby and kitchenette."
+    },
+    {
+      "id": "loc_crb_gf_hod",
+      "number": "CRB-GF-HOD",
+      "name": "HOD / Department Cabins 01–03 (GF)",
+      "department": "College Administration",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_hod",
+      "category": "office",
+      "keywords": [
+        "crb-gf-hod",
+        "crbgfhod",
+        "hod / department cabins 01–03 (gf)",
+        "office",
+        "ground",
+        "college administration",
+        "hod",
+        "department",
+        "head of department",
+        "gf-hod",
+        "room gf-hod",
+        "cr gf-hod"
+      ],
+      "description": "Three Head of Department (HOD) cabins off the Ground Floor corridor.",
+      "hint": "Ground Floor: Three Head of Department (HOD) cabins off the Ground Floor corridor."
+    },
+    {
+      "id": "loc_crb_gf_staff1",
+      "number": "CRB-GF-SR1",
+      "name": "Staff Room 01 & Cubicles (GF)",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_staff1",
+      "category": "office",
+      "keywords": [
+        "crb-gf-sr1",
+        "crbgfsr1",
+        "staff room 01 & cubicles (gf)",
+        "office",
+        "ground",
+        "academic department",
+        "staff room",
+        "staff room 01",
+        "cubicles",
+        "gf-sr1",
+        "room gf-sr1",
+        "cr gf-sr1"
+      ],
+      "description": "Faculty Staff Room 01 (9.03 x 4.55m) with Cubicles 01–04.",
+      "hint": "Ground Floor: Faculty Staff Room 01 (9.03 x 4.55m) with Cubicles 01–04."
+    },
+    {
+      "id": "loc_crb_gf_staff2",
+      "number": "CRB-GF-SR2",
+      "name": "Staff Rooms 02 & 03 (GF)",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_staff2",
+      "category": "office",
+      "keywords": [
+        "crb-gf-sr2",
+        "crbgfsr2",
+        "staff rooms 02 & 03 (gf)",
+        "office",
+        "ground",
+        "academic department",
+        "staff room",
+        "staff room 02",
+        "staff room 03",
+        "gf-sr2",
+        "room gf-sr2",
+        "cr gf-sr2"
+      ],
+      "description": "Dual staff rooms (9.03 x 4.55m each) with 8 faculty cubicles in the east-central core.",
+      "hint": "Ground Floor: Dual staff rooms (9.03 x 4.55m each) with 8 faculty cubicles in the east-central core."
+    },
+    {
+      "id": "loc_crb_gf_kitchenette",
+      "number": "CRB-GF-KIT",
+      "name": "Kitchenette (Class Room Block GF)",
+      "department": "Academic Department",
+      "floor": "ground",
+      "nodeId": "node_crb_gf_kitchenette",
+      "category": "canteen",
+      "keywords": [
+        "crb-gf-kit",
+        "crbgfkit",
+        "kitchenette (class room block gf)",
+        "canteen",
+        "ground",
+        "academic department",
+        "kitchenette",
+        "tea",
+        "coffee",
+        "pantry",
+        "gf-kit",
+        "room gf-kit",
+        "cr gf-kit"
+      ],
+      "description": "Refreshment kitchenette near the south-east exit on Ground Floor.",
+      "hint": "Ground Floor: Refreshment kitchenette near the south-east exit on Ground Floor."
+    },
+    {
+      "id": "loc_crb_ff_cr01",
+      "number": "CRB-FF-01",
+      "name": "Class Room 01 (72 Capacity) – FF",
+      "department": "Electronics & Communication",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr01",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-01",
+        "crbff01",
+        "class room 01 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "electronics & communication",
+        "classroom 01",
+        "class room 01",
+        "first floor",
+        "ff-01",
+        "room ff-01",
+        "cr ff-01"
+      ],
+      "description": "First floor lecture classroom adjacent to Lift-02 and Lobby.",
+      "hint": "1st Floor: First floor lecture classroom adjacent to Lift-02 and Lobby."
+    },
+    {
+      "id": "loc_crb_ff_cr02",
+      "number": "CRB-FF-02",
+      "name": "Class Room 02 (72 Capacity) – FF",
+      "department": "Electronics & Communication",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr02",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-02",
+        "crbff02",
+        "class room 02 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "electronics & communication",
+        "classroom 02",
+        "class room 02",
+        "first floor",
+        "ff-02",
+        "room ff-02",
+        "cr ff-02"
+      ],
+      "description": "First floor west angled wing lecture room (12.00 x 7.50m).",
+      "hint": "1st Floor: First floor west angled wing lecture room (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_ff_cr03",
+      "number": "CRB-FF-03",
+      "name": "Class Room 03 (72 Capacity) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr03",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-03",
+        "crbff03",
+        "class room 03 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 03",
+        "class room 03",
+        "first floor",
+        "ff-03",
+        "room ff-03",
+        "cr ff-03"
+      ],
+      "description": "First floor west angled wing middle classroom.",
+      "hint": "1st Floor: First floor west angled wing middle classroom."
+    },
+    {
+      "id": "loc_crb_ff_cr04",
+      "number": "CRB-FF-04",
+      "name": "Class Room 04 (72 Capacity) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr04",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-04",
+        "crbff04",
+        "class room 04 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 04",
+        "class room 04",
+        "first floor",
+        "ff-04",
+        "room ff-04",
+        "cr ff-04"
+      ],
+      "description": "First floor north-west angled wing classroom (12.00 x 7.50m).",
+      "hint": "1st Floor: First floor north-west angled wing classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_ff_cr05",
+      "number": "CRB-FF-05",
+      "name": "Class Room 05 (72 Capacity) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr05",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-05",
+        "crbff05",
+        "class room 05 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 05",
+        "class room 05",
+        "first floor",
+        "ff-05",
+        "room ff-05",
+        "cr ff-05"
+      ],
+      "description": "First floor north wing classroom (12.00 x 7.50m).",
+      "hint": "1st Floor: First floor north wing classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_ff_cr06",
+      "number": "CRB-FF-06",
+      "name": "Class Room 06 (72 Capacity) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr06",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-06",
+        "crbff06",
+        "class room 06 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 06",
+        "class room 06",
+        "first floor",
+        "ff-06",
+        "room ff-06",
+        "cr ff-06"
+      ],
+      "description": "First floor north-central classroom (11.82 x 7.50m).",
+      "hint": "1st Floor: First floor north-central classroom (11.82 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_ff_cr07",
+      "number": "CRB-FF-07",
+      "name": "Class Room 07 (New) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr07",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-07",
+        "crbff07",
+        "class room 07 (new) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 07",
+        "class room 07",
+        "new",
+        "first floor",
+        "ff-07",
+        "room ff-07",
+        "cr ff-07"
+      ],
+      "description": "First floor north-east classroom (11.87 x 7.50m) near fire exit.",
+      "hint": "1st Floor: First floor north-east classroom (11.87 x 7.50m) near fire exit."
+    },
+    {
+      "id": "loc_crb_ff_cr08",
+      "number": "CRB-FF-08",
+      "name": "Class Room 08 (45 Capacity) – FF",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr08",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-08",
+        "crbff08",
+        "class room 08 (45 capacity) – ff",
+        "classroom",
+        "first",
+        "academic department",
+        "classroom 08",
+        "class room 08",
+        "first floor",
+        "ff-08",
+        "room ff-08",
+        "cr ff-08"
+      ],
+      "description": "First floor 45-seat classroom next to the 3.0m corridor.",
+      "hint": "1st Floor: First floor 45-seat classroom next to the 3.0m corridor."
+    },
+    {
+      "id": "loc_crb_ff_cr09",
+      "number": "CRB-FF-09",
+      "name": "Class Room 09 (72 Capacity) – FF",
+      "department": "Electronics & Communication",
+      "floor": "first",
+      "nodeId": "node_crb_ff_cr09",
+      "category": "classroom",
+      "keywords": [
+        "crb-ff-09",
+        "crbff09",
+        "class room 09 (72 capacity) – ff",
+        "classroom",
+        "first",
+        "electronics & communication",
+        "classroom 09",
+        "class room 09",
+        "first floor",
+        "ff-09",
+        "room ff-09",
+        "cr ff-09"
+      ],
+      "description": "First floor south-east lecture room beside the Lobby.",
+      "hint": "1st Floor: First floor south-east lecture room beside the Lobby."
+    },
+    {
+      "id": "loc_crb_ff_hod",
+      "number": "CRB-FF-HOD",
+      "name": "HOD / Department Offices (FF)",
+      "department": "College Administration",
+      "floor": "first",
+      "nodeId": "node_crb_ff_hod",
+      "category": "office",
+      "keywords": [
+        "crb-ff-hod",
+        "crbffhod",
+        "hod / department offices (ff)",
+        "office",
+        "first",
+        "college administration",
+        "hod",
+        "department",
+        "first floor",
+        "ff-hod",
+        "room ff-hod",
+        "cr ff-hod"
+      ],
+      "description": "First floor HOD cabins 01 & 02 above the Ground Floor academic wing.",
+      "hint": "1st Floor: First floor HOD cabins 01 & 02 above the Ground Floor academic wing."
+    },
+    {
+      "id": "loc_crb_ff_staff",
+      "number": "CRB-FF-SR",
+      "name": "Staff Rooms 01–03 (First Floor)",
+      "department": "Academic Department",
+      "floor": "first",
+      "nodeId": "node_crb_ff_staff",
+      "category": "office",
+      "keywords": [
+        "crb-ff-sr",
+        "crbffsr",
+        "staff rooms 01–03 (first floor)",
+        "office",
+        "first",
+        "academic department",
+        "staff room",
+        "first floor",
+        "ff-sr",
+        "room ff-sr",
+        "cr ff-sr"
+      ],
+      "description": "First floor faculty staff rooms and cubicles.",
+      "hint": "1st Floor: First floor faculty staff rooms and cubicles."
+    },
+    {
+      "id": "loc_crb_sf_cr01",
+      "number": "CRB-SF-01",
+      "name": "Class Room 01 (72 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr01",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-01",
+        "crbsf01",
+        "class room 01 (72 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 01",
+        "class room 01",
+        "second floor",
+        "sf-01",
+        "room sf-01",
+        "cr sf-01"
+      ],
+      "description": "Second floor south-west angled classroom (12.00 x 7.50m).",
+      "hint": "2nd Floor: Second floor south-west angled classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_cr02",
+      "number": "CRB-SF-02",
+      "name": "Class Room 02 (72 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr02",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-02",
+        "crbsf02",
+        "class room 02 (72 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 02",
+        "class room 02",
+        "second floor",
+        "sf-02",
+        "room sf-02",
+        "cr sf-02"
+      ],
+      "description": "Second floor west angled middle classroom (12.00 x 7.50m).",
+      "hint": "2nd Floor: Second floor west angled middle classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_cr03",
+      "number": "CRB-SF-03",
+      "name": "Class Room 03 (72 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr03",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-03",
+        "crbsf03",
+        "class room 03 (72 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 03",
+        "class room 03",
+        "second floor",
+        "sf-03",
+        "room sf-03",
+        "cr sf-03"
+      ],
+      "description": "Second floor north-west angled classroom (12.00 x 7.50m).",
+      "hint": "2nd Floor: Second floor north-west angled classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_cr04",
+      "number": "CRB-SF-04",
+      "name": "Class Room 04 (72 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr04",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-04",
+        "crbsf04",
+        "class room 04 (72 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 04",
+        "class room 04",
+        "second floor",
+        "sf-04",
+        "room sf-04",
+        "cr sf-04"
+      ],
+      "description": "Second floor north wing classroom (12.00 x 7.50m).",
+      "hint": "2nd Floor: Second floor north wing classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_cr05",
+      "number": "CRB-SF-05",
+      "name": "Class Room 05 (72 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr05",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-05",
+        "crbsf05",
+        "class room 05 (72 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 05",
+        "class room 05",
+        "second floor",
+        "sf-05",
+        "room sf-05",
+        "cr sf-05"
+      ],
+      "description": "Second floor north-central classroom (11.82 x 7.50m).",
+      "hint": "2nd Floor: Second floor north-central classroom (11.82 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_cr06",
+      "number": "CRB-SF-06",
+      "name": "Class Room 06 (New) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr06",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-06",
+        "crbsf06",
+        "class room 06 (new) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 06",
+        "class room 06",
+        "new",
+        "second floor",
+        "sf-06",
+        "room sf-06",
+        "cr sf-06"
+      ],
+      "description": "Second floor north-east classroom (11.87 x 7.50m).",
+      "hint": "2nd Floor: Second floor north-east classroom (11.87 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_sf_staff",
+      "number": "CRB-SF-SR1",
+      "name": "Staffroom & Cubicles 01–08 (SF)",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_staff",
+      "category": "office",
+      "keywords": [
+        "crb-sf-sr1",
+        "crbsfsr1",
+        "staffroom & cubicles 01–08 (sf)",
+        "office",
+        "second",
+        "electronics & communication",
+        "staffroom",
+        "staff room",
+        "second floor",
+        "faculty",
+        "sf-sr1",
+        "room sf-sr1",
+        "cr sf-sr1"
+      ],
+      "description": "Large Second Floor faculty staffroom (8.95 x 7.50m) with cubicles.",
+      "hint": "2nd Floor: Large Second Floor faculty staffroom (8.95 x 7.50m) with cubicles."
+    },
+    {
+      "id": "loc_crb_sf_staff2",
+      "number": "CRB-SF-SR2",
+      "name": "Staff Rooms 02 & 03 (Second Floor)",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_staff2",
+      "category": "office",
+      "keywords": [
+        "crb-sf-sr2",
+        "crbsfsr2",
+        "staff rooms 02 & 03 (second floor)",
+        "office",
+        "second",
+        "electronics & communication",
+        "staff room",
+        "staff room 02",
+        "staff room 03",
+        "second floor",
+        "sf-sr2",
+        "room sf-sr2",
+        "cr sf-sr2"
+      ],
+      "description": "East-central faculty staff rooms 02 & 03 with cubicles.",
+      "hint": "2nd Floor: East-central faculty staff rooms 02 & 03 with cubicles."
+    },
+    {
+      "id": "loc_crb_sf_cr08",
+      "number": "CRB-SF-07",
+      "name": "Class Room 07 / 08 (45 Capacity) – SF",
+      "department": "Electronics & Communication",
+      "floor": "second",
+      "nodeId": "node_crb_sf_cr08",
+      "category": "classroom",
+      "keywords": [
+        "crb-sf-07",
+        "crbsf07",
+        "class room 07 / 08 (45 capacity) – sf",
+        "classroom",
+        "second",
+        "electronics & communication",
+        "classroom 07",
+        "classroom 08",
+        "second floor",
+        "sf-07",
+        "room sf-07",
+        "cr sf-07"
+      ],
+      "description": "Second floor 45-seat classroom (8.95 x 7.50m) off the 3.0m corridor.",
+      "hint": "2nd Floor: Second floor 45-seat classroom (8.95 x 7.50m) off the 3.0m corridor."
+    },
+    {
+      "id": "loc_crb_tf_cr01",
+      "number": "CRB-TF-01",
+      "name": "Class Room 01 (72 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr01",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-01",
+        "crbtf01",
+        "class room 01 (72 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 01",
+        "class room 01",
+        "third floor",
+        "tf-01",
+        "room tf-01",
+        "cr tf-01"
+      ],
+      "description": "Third floor south-west angled classroom (12.00 x 7.50m).",
+      "hint": "3rd Floor: Third floor south-west angled classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_cr02",
+      "number": "CRB-TF-02",
+      "name": "Class Room 02 (72 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr02",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-02",
+        "crbtf02",
+        "class room 02 (72 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 02",
+        "class room 02",
+        "third floor",
+        "tf-02",
+        "room tf-02",
+        "cr tf-02"
+      ],
+      "description": "Third floor west angled middle classroom (12.00 x 7.50m).",
+      "hint": "3rd Floor: Third floor west angled middle classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_cr03",
+      "number": "CRB-TF-03",
+      "name": "Class Room 03 (72 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr03",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-03",
+        "crbtf03",
+        "class room 03 (72 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 03",
+        "class room 03",
+        "third floor",
+        "tf-03",
+        "room tf-03",
+        "cr tf-03"
+      ],
+      "description": "Third floor north-west angled classroom (12.00 x 7.50m).",
+      "hint": "3rd Floor: Third floor north-west angled classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_cr04",
+      "number": "CRB-TF-04",
+      "name": "Class Room 04 (72 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr04",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-04",
+        "crbtf04",
+        "class room 04 (72 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 04",
+        "class room 04",
+        "third floor",
+        "tf-04",
+        "room tf-04",
+        "cr tf-04"
+      ],
+      "description": "Third floor north-west wing classroom (12.00 x 7.50m).",
+      "hint": "3rd Floor: Third floor north-west wing classroom (12.00 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_cr05",
+      "number": "CRB-TF-05",
+      "name": "Class Room 05 (72 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr05",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-05",
+        "crbtf05",
+        "class room 05 (72 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 05",
+        "class room 05",
+        "third floor",
+        "tf-05",
+        "room tf-05",
+        "cr tf-05"
+      ],
+      "description": "Third floor north-central classroom (11.82 x 7.50m).",
+      "hint": "3rd Floor: Third floor north-central classroom (11.82 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_cr06",
+      "number": "CRB-TF-06",
+      "name": "Class Room 06 (New) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr06",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-06",
+        "crbtf06",
+        "class room 06 (new) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 06",
+        "class room 06",
+        "new",
+        "third floor",
+        "tf-06",
+        "room tf-06",
+        "cr tf-06"
+      ],
+      "description": "Third floor north-east classroom (11.87 x 7.50m).",
+      "hint": "3rd Floor: Third floor north-east classroom (11.87 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_staff",
+      "number": "CRB-TF-SR",
+      "name": "Staffroom & Cubicles 01–08 (TF)",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_staff",
+      "category": "office",
+      "keywords": [
+        "crb-tf-sr",
+        "crbtfsr",
+        "staffroom & cubicles 01–08 (tf)",
+        "office",
+        "third",
+        "academic department",
+        "staffroom",
+        "third floor",
+        "cubicles",
+        "tf-sr",
+        "room tf-sr",
+        "cr tf-sr"
+      ],
+      "description": "Third floor faculty staffroom (8.95 x 7.50m) with 8 cubicles.",
+      "hint": "3rd Floor: Third floor faculty staffroom (8.95 x 7.50m) with 8 cubicles."
+    },
+    {
+      "id": "loc_crb_tf_cr07",
+      "number": "CRB-TF-07",
+      "name": "Class Room 07 (45 Capacity) – TF",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_cr07",
+      "category": "classroom",
+      "keywords": [
+        "crb-tf-07",
+        "crbtf07",
+        "class room 07 (45 capacity) – tf",
+        "classroom",
+        "third",
+        "academic department",
+        "classroom 07",
+        "class room 07",
+        "third floor",
+        "tf-07",
+        "room tf-07",
+        "cr tf-07"
+      ],
+      "description": "Third floor 45-seat classroom (8.95 x 7.50m).",
+      "hint": "3rd Floor: Third floor 45-seat classroom (8.95 x 7.50m)."
+    },
+    {
+      "id": "loc_crb_tf_ladies_toilet",
+      "number": "CRB-TF-WC-F",
+      "name": "Ladies Toilet (Class Room Block TF)",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_ladies_toilet",
+      "category": "washroom",
+      "keywords": [
+        "crb-tf-wc-f",
+        "crbtfwcf",
+        "ladies toilet (class room block tf)",
+        "washroom",
+        "third",
+        "academic department",
+        "ladies toilet",
+        "restroom",
+        "women",
+        "tf-wc-f",
+        "room tf-wc-f",
+        "cr tf-wc-f"
+      ],
+      "description": "Ladies washroom facility (9.05 x 3.25m) on the Third Floor south-east wing.",
+      "hint": "3rd Floor: Ladies washroom facility (9.05 x 3.25m) on the Third Floor south-east wing."
+    },
+    {
+      "id": "loc_crb_tf_gents_toilet",
+      "number": "CRB-TF-WC-M",
+      "name": "Gents Toilet (Class Room Block TF)",
+      "department": "Academic Department",
+      "floor": "third",
+      "nodeId": "node_crb_tf_gents_toilet",
+      "category": "washroom",
+      "keywords": [
+        "crb-tf-wc-m",
+        "crbtfwcm",
+        "gents toilet (class room block tf)",
+        "washroom",
+        "third",
+        "academic department",
+        "gents toilet",
+        "restroom",
+        "men",
+        "tf-wc-m",
+        "room tf-wc-m",
+        "cr tf-wc-m"
+      ],
+      "description": "Gents washroom facility (9.05 x 3.25m) on the Third Floor south-east wing.",
+      "hint": "3rd Floor: Gents washroom facility (9.05 x 3.25m) on the Third Floor south-east wing."
+    },
+    {
+      "id": "loc_adm_gf_reception",
+      "number": "ADM-GF-01",
+      "name": "Admin Block Ground Reception & Entrance",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_adm_gf_foyer",
+      "category": "office",
+      "keywords": [
+        "adm-gf-01",
+        "admgf01",
+        "admin block ground reception & entrance",
+        "office",
+        "ground",
+        "electronics & communication",
+        "admin",
+        "reception",
+        "entrance"
+      ],
+      "description": "Main ground-floor entrance foyer of Admin Block leading to Second Floor Labs.",
+      "hint": "Ground Floor: Main ground-floor entrance foyer of Admin Block leading to Second Floor Labs."
+    },
+    {
+      "id": "loc_adm_sf_cl2",
+      "number": "ADM-SF-CL2",
+      "name": "Computer Lab 02 (48 Capacity) – Admin SF",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_cl2",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-cl2",
+        "admsfcl2",
+        "computer lab 02 (48 capacity) – admin sf",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "computer lab 02",
+        "48 capacity",
+        "admin block"
+      ],
+      "description": "48-seat computer laboratory on the north side of Admin Block Second Floor.",
+      "hint": "2nd Floor: 48-seat computer laboratory on the north side of Admin Block Second Floor."
+    },
+    {
+      "id": "loc_adm_sf_cl60",
+      "number": "ADM-SF-CL60",
+      "name": "Computer Lab (60 Capacity) – Admin SF",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_cl60",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-cl60",
+        "admsfcl60",
+        "computer lab (60 capacity) – admin sf",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "computer lab",
+        "60 capacity",
+        "admin block"
+      ],
+      "description": "60-seat computer lab in the north-west angled wing of Admin Block SF.",
+      "hint": "2nd Floor: 60-seat computer lab in the north-west angled wing of Admin Block SF."
+    },
+    {
+      "id": "loc_adm_sf_pc01",
+      "number": "ADM-SF-PC01",
+      "name": "Lab PC-01 (Admin SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_pc01",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-pc01",
+        "admsfpc01",
+        "lab pc-01 (admin sf)",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "lab pc-01",
+        "pc-01"
+      ],
+      "description": "Specialized Computing Lab PC-01 off the central corridor.",
+      "hint": "2nd Floor: Specialized Computing Lab PC-01 off the central corridor."
+    },
+    {
+      "id": "loc_adm_sf_pc02",
+      "number": "ADM-SF-PC02",
+      "name": "Lab PC-02 (Admin SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_pc02",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-pc02",
+        "admsfpc02",
+        "lab pc-02 (admin sf)",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "lab pc-02",
+        "pc-02"
+      ],
+      "description": "Computing Lab PC-02 adjacent to the central staircase landing.",
+      "hint": "2nd Floor: Computing Lab PC-02 adjacent to the central staircase landing."
+    },
+    {
+      "id": "loc_adm_sf_pc03",
+      "number": "ADM-SF-PC03",
+      "name": "Lab PC-03 (Admin SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_pc03",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-pc03",
+        "admsfpc03",
+        "lab pc-03 (admin sf)",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "lab pc-03",
+        "pc-03"
+      ],
+      "description": "North-east Computing Lab PC-03 beside the Staff Room.",
+      "hint": "2nd Floor: North-east Computing Lab PC-03 beside the Staff Room."
+    },
+    {
+      "id": "loc_adm_sf_pc04",
+      "number": "ADM-SF-PC04",
+      "name": "Lab PC-04 (Admin SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_pc04",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-pc04",
+        "admsfpc04",
+        "lab pc-04 (admin sf)",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "lab pc-04",
+        "pc-04"
+      ],
+      "description": "South-east Computing Lab PC-04 next to the Maintenance Room.",
+      "hint": "2nd Floor: South-east Computing Lab PC-04 next to the Maintenance Room."
+    },
+    {
+      "id": "loc_adm_sf_staff",
+      "number": "ADM-SF-SR",
+      "name": "Staff Room (Admin Block SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_staff",
+      "category": "office",
+      "keywords": [
+        "adm-sf-sr",
+        "admsfsr",
+        "staff room (admin block sf)",
+        "office",
+        "second",
+        "computer science & engineering",
+        "staff room",
+        "admin block",
+        "faculty"
+      ],
+      "description": "Faculty Staff Room located between Lab PC-02 and Lab PC-03.",
+      "hint": "2nd Floor: Faculty Staff Room located between Lab PC-02 and Lab PC-03."
+    },
+    {
+      "id": "loc_adm_sf_proj_lab",
+      "number": "ADM-SF-PROJ",
+      "name": "Physics / Project Lab (Admin SF)",
+      "department": "Computer Science & Engineering",
+      "floor": "second",
+      "nodeId": "node_adm_sf_proj_lab",
+      "category": "lab",
+      "keywords": [
+        "adm-sf-proj",
+        "admsfproj",
+        "physics / project lab (admin sf)",
+        "lab",
+        "second",
+        "computer science & engineering",
+        "physics lab",
+        "project lab",
+        "admin block"
+      ],
+      "description": "South-west wing laboratory on Admin Block Second Floor.",
+      "hint": "2nd Floor: South-west wing laboratory on Admin Block Second Floor."
+    },
+    {
+      "id": "loc_adm_sf_toilet",
+      "number": "ADM-SF-WC",
+      "name": "Gents Toilet (Admin Block SF)",
+      "department": "College Administration",
+      "floor": "second",
+      "nodeId": "node_adm_sf_toilet",
+      "category": "washroom",
+      "keywords": [
+        "adm-sf-wc",
+        "admsfwc",
+        "gents toilet (admin block sf)",
+        "washroom",
+        "second",
+        "college administration",
+        "toilet",
+        "restroom"
+      ],
+      "description": "West wing gents restroom and maintenance bay.",
+      "hint": "2nd Floor: West wing gents restroom and maintenance bay."
+    },
+    {
+      "id": "loc_out_gate",
+      "number": "GATE-1",
+      "name": "Canara Engineering College Main Gate",
+      "department": "Electronics & Communication",
+      "floor": "ground",
+      "nodeId": "node_out_gate",
+      "category": "entrance",
+      "keywords": [
+        "gate-1",
+        "gate1",
+        "canara engineering college main gate",
+        "entrance",
+        "ground",
+        "electronics & communication",
+        "gate",
+        "security"
+      ],
+      "description": "Main campus entrance plaza on Sudhindra Nagar, Benjanapadavu.",
+      "hint": "Ground Floor: Main campus entrance plaza on Sudhindra Nagar, Benjanapadavu."
+    }
+  ]
+}

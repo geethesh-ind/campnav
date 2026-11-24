@@ -1,0 +1,6 @@
+{
+  "name": "CampusNav – Smart Campus Navigation",
+  "description": "Never Get Lost on Campus Again. Real-time indoor and outdoor college campus navigation with multi-floor routing, turn-by-turn guidance, wrong-direction detection, and campus map management.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
