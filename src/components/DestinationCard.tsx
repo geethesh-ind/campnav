@@ -9,6 +9,7 @@ import {
   MapPin,
   Check,
   AlertTriangle,
+  Footprints,
 } from 'lucide-react';
 import { useCampus } from '../context/CampusContext';
 import { findOptimalPath } from '../utils/navigationEngine';
@@ -20,6 +21,7 @@ export const DestinationCard: React.FC = () => {
     startNavigation,
     startLocation,
     setStartLocation,
+    setUserPositionManual,
     isNavigating,
     userPosition,
     buildings,
@@ -104,33 +106,37 @@ export const DestinationCard: React.FC = () => {
   return (
     <div className="fixed bottom-3 left-0 right-0 z-20 pointer-events-none px-3">
       <div className="max-w-xl mx-auto pointer-events-auto">
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-300 overflow-hidden divide-y divide-slate-100 transition-all">
+        <div className="bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden divide-y divide-slate-100 transition-all">
+          {/* Top Accent Bar */}
+          <div className="h-1.5 w-full bg-gradient-to-r from-[#0f3b7a] via-blue-600 to-amber-500" />
+
           {/* Header Info */}
-          <div className="p-3.5 sm:p-4">
+          <div className="p-4 sm:p-4.5">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-800 text-xs font-mono font-bold uppercase border border-slate-200">
+                <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                  <span className="px-2 py-0.5 rounded-md bg-slate-900 text-white text-xs font-mono font-extrabold uppercase">
                     {selectedDestination.roomNumber}
                   </span>
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                  <span className="px-2 py-0.5 rounded-md bg-blue-50 text-[#0f3b7a] text-[11px] font-extrabold uppercase tracking-wider border border-blue-200/60">
                     {selectedDestination.category.replace('_', ' ')}
                   </span>
+                  <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200/60">
+                    {floor?.floorName || 'Ground Floor'}
+                  </span>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug">
+                <h3 className="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight leading-snug">
                   {selectedDestination.name}
                 </h3>
-                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 font-medium">
+                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 font-semibold">
                   <Building2 className="w-3.5 h-3.5 text-[#0f3b7a] shrink-0" />
-                  <span className="truncate">{building?.name.split(' (')[0] || 'Campus Grounds'}</span>
-                  <span>•</span>
-                  <span className="shrink-0 text-amber-800 font-semibold">{floor?.floorName || 'Ground'}</span>
+                  <span className="truncate">{building?.name.split(' (')[0] || 'Canara Engineering College'}</span>
                 </p>
               </div>
 
               <button
                 onClick={() => setSelectedDestination(null)}
-                className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer transition-colors shrink-0"
+                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer transition-colors shrink-0"
                 aria-label="Close destination details"
               >
                 <X className="w-4 h-4" />
@@ -142,10 +148,10 @@ export const DestinationCard: React.FC = () => {
             </p>
 
             {/* Starting point selector */}
-            <div className="mt-3 flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5">
+            <div className="mt-3 flex items-center gap-2 bg-slate-50 border border-slate-200/90 rounded-xl px-3 py-2">
               <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <label htmlFor="dest-start-select" className="text-[11px] font-bold text-slate-500 uppercase tracking-wide shrink-0">
-                From:
+              <label htmlFor="dest-start-select" className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wide shrink-0">
+                Start From:
               </label>
               <select
                 id="dest-start-select"
@@ -153,11 +159,21 @@ export const DestinationCard: React.FC = () => {
                 onChange={e => {
                   const chosen = locations.find(l => l.id === e.target.value) || null;
                   setStartLocation(chosen);
+                  if (chosen) {
+                    setUserPositionManual({
+                      x: chosen.coordinates.x,
+                      y: chosen.coordinates.y,
+                      buildingId: chosen.buildingId,
+                      floorId: chosen.floorId,
+                      confirmedLocationName: `${chosen.name} (${chosen.roomNumber})`,
+                      method: 'manual',
+                    });
+                  }
                 }}
-                className="w-full text-xs font-semibold text-slate-800 bg-transparent focus:outline-hidden cursor-pointer truncate"
+                className="w-full text-xs font-bold text-slate-800 bg-transparent focus:outline-hidden cursor-pointer truncate"
               >
                 <option value="">
-                  Current Position ({userPosition.confirmedLocationName || 'Campus Pin'})
+                  Current Position ({userPosition.confirmedLocationName || 'Main Gate'})
                 </option>
                 {locations
                   .filter(l => l.id !== selectedDestination.id)
@@ -171,14 +187,14 @@ export const DestinationCard: React.FC = () => {
 
             {/* Faculty Details if available */}
             {selectedDestination.facultyInfo && (
-              <div className="mt-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700">
-                <p className="font-bold text-slate-900">
+              <div className="mt-2.5 p-2.5 rounded-xl bg-blue-50/50 border border-blue-200/60 text-xs text-slate-700">
+                <p className="font-extrabold text-slate-900">
                   {selectedDestination.facultyInfo.name}
                 </p>
-                <p className="text-slate-600 text-[11px]">
+                <p className="text-slate-600 text-[11px] font-medium">
                   {selectedDestination.facultyInfo.designation} • {selectedDestination.facultyInfo.department}
                 </p>
-                <div className="mt-1.5 pt-1.5 border-t border-slate-200 flex flex-wrap gap-x-4 gap-y-1 text-slate-600 text-[11px]">
+                <div className="mt-1.5 pt-1.5 border-t border-blue-200/50 flex flex-wrap gap-x-4 gap-y-1 text-slate-600 text-[11px] font-medium">
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3 text-[#0f3b7a]" />
                     <span>{selectedDestination.facultyInfo.officeHours}</span>
@@ -192,19 +208,29 @@ export const DestinationCard: React.FC = () => {
             )}
           </div>
 
-          {/* Action Buttons & Distance metrics (min 44px tap targets) */}
-          <div className="p-3 bg-slate-50 flex items-center justify-between gap-2.5">
+          {/* Action Buttons & Distance metrics */}
+          <div className="p-3.5 bg-slate-50/90 flex items-center justify-between gap-2.5">
             {routePreview.reachable ? (
-              <div className="flex items-baseline gap-1.5 text-xs">
-                <span className="text-base font-bold text-slate-900 font-mono">
-                  {routePreview.distance}m
-                </span>
-                <span className="text-slate-500 font-medium">
-                  (~{routePreview.time} min)
-                </span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200/70 flex items-center justify-center text-[#0f3b7a]">
+                  <Footprints className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-base font-extrabold text-slate-900 font-mono">
+                      {routePreview.distance}m
+                    </span>
+                    <span className="text-xs font-bold text-emerald-700">
+                      • ~{routePreview.time} min walk
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-semibold text-slate-400 block">
+                    Optimal indoor + corridor path
+                  </span>
+                </div>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 text-xs text-amber-700 font-semibold">
+              <div className="flex items-center gap-1.5 text-xs text-amber-700 font-bold">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>No lift path available in wheelchair mode</span>
               </div>
@@ -213,19 +239,19 @@ export const DestinationCard: React.FC = () => {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={handleShare}
-                className="min-h-[44px] px-3 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 shadow-2xs transition-colors cursor-pointer flex items-center gap-1 text-xs font-semibold"
-                title="Copy shareable link"
+                className="min-h-[42px] px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/90 shadow-2xs transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                title="Copy shareable route link"
               >
                 {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
-                <span>{copied ? 'Copied' : 'Share'}</span>
+                <span className="hidden xs:inline">{copied ? 'Copied' : 'Share'}</span>
               </button>
 
               <button
                 onClick={() => startNavigation(selectedDestination, startLocation || undefined)}
                 disabled={!routePreview.reachable}
-                className="min-h-[44px] px-4 rounded-lg bg-[#0f3b7a] hover:bg-[#0a2752] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
+                className="min-h-[42px] px-4 rounded-xl bg-gradient-to-r from-[#0f3b7a] to-[#164e9f] hover:from-[#0a2752] hover:to-[#0f3b7a] disabled:from-slate-300 disabled:to-slate-300 disabled:cursor-not-allowed text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-md transition-all cursor-pointer"
               >
-                <Navigation className="w-4 h-4 text-amber-400" />
+                <Navigation className="w-4 h-4 text-amber-300" />
                 <span>Start Navigation</span>
               </button>
             </div>

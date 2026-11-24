@@ -137,6 +137,11 @@ export const CampusMap: React.FC = () => {
   // Auto-follow user camera centering when isFollowUser is enabled during navigation/movement
   useEffect(() => {
     if (!isFollowUser || !isNavigating || isDragging) return;
+    // When zoom is 1.0, the full 1000x650 canvas fits the viewport—keep pan at (0,0) so the blueprint isn't pushed off-screen
+    if (zoom <= 1.05) {
+      setPan(prev => (prev.x === 0 && prev.y === 0 ? prev : { x: 0, y: 0 }));
+      return;
+    }
     const targetPanX = Math.round(500 - userPosition.x * zoom);
     const targetPanY = Math.round(325 - userPosition.y * zoom);
 
@@ -264,20 +269,34 @@ export const CampusMap: React.FC = () => {
     return visibleNodes.filter(n => n.nodeType === 'staircase' || n.nodeType === 'elevator');
   }, [visibleNodes]);
 
-  // Active route polyline points on current floor
-  const activeRoutePolyline = useMemo(() => {
-    if (!activeRoute) return null;
-    const sameFloorPoints = activeRoute.nodePath
-      .filter(n => {
-        if (!activeFloorId || activeFloorId === 'outdoor') {
-          return n.floorId === 'outdoor';
-        }
-        return n.floorId === activeFloorId;
-      })
-      .map(n => `${n.x},${n.y}`);
+  // Active route polyline segments on current floor (grouped into contiguous same-floor runs)
+  const activeRoutePolylines = useMemo(() => {
+    if (!activeRoute) return [];
+    const currentViewFloor = !activeFloorId || activeFloorId === 'outdoor' ? 'outdoor' : activeFloorId;
+    const segments: string[] = [];
+    let currentRun: string[] = [];
 
-    if (sameFloorPoints.length < 2) return null;
-    return sameFloorPoints.join(' ');
+    for (const n of activeRoute.nodePath) {
+      if (n.floorId === currentViewFloor) {
+        currentRun.push(`${n.x},${n.y}`);
+      } else {
+        if (currentRun.length >= 2) {
+          segments.push(currentRun.join(' '));
+        }
+        currentRun = [];
+      }
+    }
+    if (currentRun.length >= 2) {
+      segments.push(currentRun.join(' '));
+    }
+    return segments;
+  }, [activeRoute, activeFloorId]);
+
+  // Single floor transition point marker when current floor only has 1 node in the route (e.g. ground floor transition between outdoor entrance & staircase)
+  const activeRouteTransitionNodes = useMemo(() => {
+    if (!activeRoute) return [];
+    const currentViewFloor = !activeFloorId || activeFloorId === 'outdoor' ? 'outdoor' : activeFloorId;
+    return activeRoute.nodePath.filter(n => n.floorId === currentViewFloor);
   }, [activeRoute, activeFloorId]);
 
   const isUserVisibleOnMap = useMemo(() => {
@@ -299,19 +318,26 @@ export const CampusMap: React.FC = () => {
   }, [selectedDestination, activeBuildingId, activeFloorId]);
 
   return (
-    <div className="relative w-full h-[470px] sm:h-[550px] lg:h-[600px] bg-[#f8fafc] rounded-2xl overflow-hidden border border-slate-300 shadow-inner select-none flex flex-col">
+    <div className="relative w-full h-[490px] sm:h-[560px] lg:h-[610px] bg-slate-100 rounded-2xl overflow-hidden border border-slate-300/90 shadow-md select-none flex flex-col">
       {/* Top Status & Floor Legs Bar */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 max-w-[85%] pointer-events-none">
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 max-w-[82%] pointer-events-none">
         {/* Current Location / Floor Pill */}
-        <div className="bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-slate-300 shadow-xs flex items-center gap-2 pointer-events-auto">
-          <div className="w-2 h-2 rounded-full bg-[#0f3b7a]" />
-          <div className="text-xs">
-            <span className="font-bold text-slate-900">
+        <div className="bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200/90 shadow-md flex items-center gap-2.5 pointer-events-auto">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0f3b7a]" />
+          </span>
+          <div className="text-xs flex items-center gap-1.5 flex-wrap">
+            <span className="font-extrabold text-slate-900">
               {currentBuilding ? currentBuilding.name.split(' (')[0] : 'Canara Engineering College'}
             </span>
-            {currentFloor && (
-              <span className="text-slate-600 font-semibold ml-1.5">
-                • {currentFloor.floorName}
+            {currentFloor && activeFloorId !== 'outdoor' && activeBuildingId !== null ? (
+              <span className="px-2 py-0.5 rounded-md bg-blue-50 text-[#0f3b7a] font-bold text-[11px] border border-blue-200/60">
+                {currentFloor.floorName}
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-bold text-[11px] border border-emerald-200/60">
+                Master Outdoor Layout
               </span>
             )}
           </div>
@@ -319,24 +345,33 @@ export const CampusMap: React.FC = () => {
 
         {/* Multi-floor route leg switcher banner */}
         {activeRoute && routeFloorsBreakdown.length > 1 && (
-          <div className="bg-[#0f3b7a] text-white px-2.5 py-1.5 rounded-lg shadow-md flex items-center gap-1.5 text-xs font-semibold overflow-x-auto no-scrollbar pointer-events-auto">
-            <span className="text-amber-300 font-bold uppercase text-[10px] tracking-wider whitespace-nowrap">
-              Route Legs:
+          <div className="bg-slate-900/95 backdrop-blur-md text-white px-3 py-2 rounded-xl shadow-lg border border-white/10 flex items-center gap-1.5 text-xs font-semibold overflow-x-auto no-scrollbar pointer-events-auto">
+            <span className="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap mr-1">
+              Floor Path:
             </span>
             {routeFloorsBreakdown.map((leg, idx) => {
-              const isCurrentLegFloor = leg.floorId === activeFloorId;
+              const isCurrentLegFloor =
+                leg.floorId === activeFloorId ||
+                (leg.floorId === 'outdoor' && (!activeBuildingId || activeFloorId === 'outdoor'));
               return (
                 <button
                   key={`${leg.floorId}_${idx}`}
-                  onClick={() => setActiveFloorId(leg.floorId)}
-                  className={`px-2 py-0.5 rounded text-[11px] font-bold transition-colors cursor-pointer whitespace-nowrap ${
+                  onClick={() => {
+                    if (leg.floorId === 'outdoor') {
+                      setActiveBuildingId(null);
+                      setActiveFloorId('outdoor');
+                    } else {
+                      setActiveFloorId(leg.floorId);
+                    }
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap ${
                     isCurrentLegFloor
-                      ? 'bg-amber-400 text-slate-950 font-black'
-                      : 'bg-white/20 hover:bg-white/30 text-white'
+                      ? 'bg-amber-400 text-slate-950 font-black shadow-xs scale-[1.02]'
+                      : 'bg-white/12 hover:bg-white/20 text-slate-200'
                   }`}
-                  title={`View leg on ${leg.floorName}`}
+                  title={`View route leg on ${leg.floorName}`}
                 >
-                  {idx + 1}. {leg.floorName.split(' ')[0]} ({leg.count} pts)
+                  {idx + 1}. {leg.floorName.split(' (')[0]}
                 </button>
               );
             })}
@@ -493,6 +528,21 @@ export const CampusMap: React.FC = () => {
             <span>OUT</span>
           </button>
         </div>
+      </div>
+
+      {/* Bottom-Left Map Legend Pill */}
+      <div className="hidden sm:flex absolute left-3 bottom-3 z-10 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/90 shadow-md items-center gap-3 text-[11px] font-bold text-slate-600 pointer-events-none">
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#0f3b7a] ring-2 ring-blue-200" />
+          <span>You Are Here</span>
+        </span>
+        <span className="text-slate-300">•</span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+          <span>Destination / Stairs</span>
+        </span>
+        <span className="text-slate-300">•</span>
+        <span className="text-slate-400 font-medium">Tap anywhere on map to relocate</span>
       </div>
 
       {/* Floating Map Zoom / Center Controls */}
@@ -862,30 +912,51 @@ export const CampusMap: React.FC = () => {
           )}
 
           {/* 3. ACTIVE ROUTE LINE & ANIMATION */}
-          {activeRoutePolyline && (
+          {activeRoutePolylines.length > 0 && (
             <g id="activeRouteOverlay">
-              {/* Core Route Line */}
-              <polyline
-                points={activeRoutePolyline}
-                fill="none"
-                stroke="#0f3b7a"
-                strokeWidth="5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* Walking dashes animation */}
-              <polyline
-                points={activeRoutePolyline}
-                fill="none"
-                stroke="#d97706"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeDasharray="5 10"
-                className="animate-route-flow"
-              />
+              {activeRoutePolylines.map((poly, idx) => (
+                <React.Fragment key={idx}>
+                  {/* Outer glow for contrast on floor blueprints */}
+                  <polyline
+                    points={poly}
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity="0.85"
+                  />
+                  {/* Core Route Line */}
+                  <polyline
+                    points={poly}
+                    fill="none"
+                    stroke="#0f3b7a"
+                    strokeWidth="5.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Walking dashes animation */}
+                  <polyline
+                    points={poly}
+                    fill="none"
+                    stroke="#f59e0b"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeDasharray="6 10"
+                    className="animate-route-flow"
+                  />
+                </React.Fragment>
+              ))}
             </g>
           )}
+
+          {/* Waypoint dots along active route on current floor */}
+          {activeRouteTransitionNodes.map(rn => (
+            <g key={`wp_${rn.id}`} transform={`translate(${rn.x}, ${rn.y})`} className="pointer-events-none">
+              <circle cx="0" cy="0" r="5" fill="#f59e0b" stroke="#0f3b7a" strokeWidth="2" />
+            </g>
+          ))}
 
           {/* 4. DESTINATION PIN */}
           {selectedDestination && isDestinationOnCurrentView && (

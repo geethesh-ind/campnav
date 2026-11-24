@@ -18,6 +18,10 @@ export interface MotionTelemetry {
   lastStepTimestamp: number;
   sensorSource: 'hardware' | 'simulated' | 'gps' | 'idle';
   hasHardwareSensors: boolean;
+  isReceivingSensorEvents: boolean;
+  isSecureContext: boolean;
+  needsPermissionGesture: boolean;
+  lastAccelerationMagnitude: number;
   gpsAccuracyMeters?: number;
 }
 
@@ -34,17 +38,25 @@ class RealtimeMotionEngine {
   private lastStepTimestamp = 0;
   private isListening = false;
   private hasHardwareSensors = false;
+  private isReceivingSensorEvents = false;
+  private isSecureContext = true;
+  private needsPermissionGesture = false;
+  private lastAccelerationMagnitude = 0;
   private sensorSource: 'hardware' | 'simulated' | 'gps' | 'idle' = 'idle';
 
   // Accelerometer low-pass / high-pass filtering state
   private gravX = 0;
   private gravY = 0;
   private gravZ = 9.81;
+  private isGravityInitialized = false;
+  private smoothedDynMag = 0;
+  private prevDynMag = 0;
+  private isAbovePeakThreshold = false;
   private lastPeakTime = 0;
   private recentStepTimes: number[] = [];
-  private stepThreshold = 1.35; // m/s^2 above baseline
-  private minStepIntervalMs = 320; // max ~3 steps per second
-  private stepLengthMeters = 0.72; // average human stride
+  private stepThreshold = 0.85; // m/s^2 dynamic linear acceleration threshold (sensitive for phone held in hand while walking)
+  private minStepIntervalMs = 280; // max ~3.5 steps per second
+  private stepLengthMeters = 1.15; // indoor map-calibrated stride length per step
 
   // Heading smoothing
   private smoothedHeading = 0;
@@ -66,15 +78,28 @@ class RealtimeMotionEngine {
   constructor() {
     if (typeof window !== 'undefined') {
       this.hasHardwareSensors = 'DeviceMotionEvent' in window || 'DeviceOrientationEvent' in window;
+      this.isSecureContext = Boolean(window.isSecureContext);
+      const DeviceMotionAny = window.DeviceMotionEvent as unknown as {
+        requestPermission?: () => Promise<'granted' | 'denied'>;
+      };
+      this.needsPermissionGesture = typeof DeviceMotionAny?.requestPermission === 'function';
     }
   }
 
   /**
-   * Request permissions (required on iOS 13+ Safari/Chrome)
+   * Request permissions (required on iOS 13+ Safari/Chrome and HTTPS origins)
    */
   async requestSensorPermission(): Promise<{ granted: boolean; error?: string }> {
     if (typeof window === 'undefined') {
       return { granted: false, error: 'Window not defined' };
+    }
+
+    if (!window.isSecureContext) {
+      return {
+        granted: false,
+        error:
+          'Mobile browsers block motion & GPS sensors on insecure HTTP connections. Please open the HTTPS link (https://...) on your phone to enable walking detection.',
+      };
     }
 
     try {
@@ -102,7 +127,11 @@ class RealtimeMotionEngine {
         }
       }
 
+      this.needsPermissionGesture = false;
+      // Re-attach listeners cleanly after permission is granted
+      this.stopListening();
       this.startListening();
+      this.emitTelemetry();
       return { granted: true };
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -173,31 +202,74 @@ class RealtimeMotionEngine {
    * Handle Accelerometer events for Step Detection (Pedestrian Dead Reckoning)
    */
   private handleDeviceMotion(event: DeviceMotionEvent): void {
-    const acc = event.accelerationIncludingGravity || event.acceleration;
-    if (!acc || acc.x === null || acc.y === null || acc.z === null) return;
+    const linearAcc = event.acceleration;
+    const gravAcc = event.accelerationIncludingGravity;
+
+    let dynMagnitude = 0;
+
+    // Prefer hardware-isolated linear acceleration (without gravity) when available and non-zero
+    if (
+      linearAcc &&
+      linearAcc.x !== null &&
+      linearAcc.y !== null &&
+      linearAcc.z !== null &&
+      (Math.abs(linearAcc.x) > 0.01 || Math.abs(linearAcc.y) > 0.01 || Math.abs(linearAcc.z) > 0.01)
+    ) {
+      dynMagnitude = Math.hypot(linearAcc.x, linearAcc.y, linearAcc.z);
+    } else if (gravAcc && gravAcc.x !== null && gravAcc.y !== null && gravAcc.z !== null) {
+      const gx = gravAcc.x || 0;
+      const gy = gravAcc.y || 0;
+      const gz = gravAcc.z || 0;
+
+      if (!this.isGravityInitialized) {
+        this.gravX = gx;
+        this.gravY = gy;
+        this.gravZ = gz;
+        this.isGravityInitialized = true;
+      } else {
+        // Low-pass filter to track gravity orientation smoothly
+        const alpha = 0.82;
+        this.gravX = alpha * this.gravX + (1 - alpha) * gx;
+        this.gravY = alpha * this.gravY + (1 - alpha) * gy;
+        this.gravZ = alpha * this.gravZ + (1 - alpha) * gz;
+      }
+
+      const dynX = gx - this.gravX;
+      const dynY = gy - this.gravY;
+      const dynZ = gz - this.gravZ;
+      dynMagnitude = Math.hypot(dynX, dynY, dynZ);
+    } else {
+      return;
+    }
 
     this.hasHardwareSensors = true;
+    if (!this.isReceivingSensorEvents) {
+      this.isReceivingSensorEvents = true;
+      this.needsPermissionGesture = false;
+      this.emitTelemetry();
+    }
 
-    // Apply low-pass filter to isolate gravity component
-    const alpha = 0.85;
-    this.gravX = alpha * this.gravX + (1 - alpha) * (acc.x || 0);
-    this.gravY = alpha * this.gravY + (1 - alpha) * (acc.y || 0);
-    this.gravZ = alpha * this.gravZ + (1 - alpha) * (acc.z || 9.81);
-
-    // Isolate dynamic linear acceleration (motion without gravity)
-    const dynX = (acc.x || 0) - this.gravX;
-    const dynY = (acc.y || 0) - this.gravY;
-    const dynZ = (acc.z || 0) - this.gravZ;
-
-    const dynamicMagnitude = Math.sqrt(dynX * dynX + dynY * dynY + dynZ * dynZ);
+    // Smooth out high-frequency vibration spikes
+    this.smoothedDynMag = 0.55 * this.smoothedDynMag + 0.45 * dynMagnitude;
+    this.lastAccelerationMagnitude = Math.round(this.smoothedDynMag * 100) / 100;
 
     const now = Date.now();
 
-    // Peak detection with refractory period
-    if (dynamicMagnitude > this.stepThreshold && now - this.lastPeakTime > this.minStepIntervalMs) {
+    // Rising-edge + peak hysteresis step detector (works reliably when holding phone while looking at map)
+    if (
+      !this.isAbovePeakThreshold &&
+      this.smoothedDynMag >= this.stepThreshold &&
+      this.smoothedDynMag > this.prevDynMag &&
+      now - this.lastPeakTime >= this.minStepIntervalMs
+    ) {
+      this.isAbovePeakThreshold = true;
       this.lastPeakTime = now;
       this.registerStep(this.stepLengthMeters, 'hardware');
+    } else if (this.isAbovePeakThreshold && this.smoothedDynMag < this.stepThreshold * 0.65) {
+      this.isAbovePeakThreshold = false;
     }
+
+    this.prevDynMag = this.smoothedDynMag;
   }
 
   /**
@@ -256,18 +328,23 @@ class RealtimeMotionEngine {
       );
       const timeDeltaSec = (now - this.lastGeoCoords.time) / 1000;
 
-      // If user moved between 1m and 50m (realistic walking speed between fixes)
-      if (dist >= 1.0 && dist <= 40 && timeDeltaSec > 0.5) {
+      // If user moved between 0.5m and 40m (realistic walking speed between fixes)
+      if (dist >= 0.5 && dist <= 40 && timeDeltaSec > 0.3) {
         // Register GPS movement
         this.registerDisplacement(dist, 'gps');
+        this.lastGeoCoords = {
+          lat: coords.latitude,
+          lng: coords.longitude,
+          time: now,
+        };
       }
+    } else {
+      this.lastGeoCoords = {
+        lat: coords.latitude,
+        lng: coords.longitude,
+        time: now,
+      };
     }
-
-    this.lastGeoCoords = {
-      lat: coords.latitude,
-      lng: coords.longitude,
-      time: now,
-    };
 
     this.emitTelemetry();
   }
@@ -354,6 +431,10 @@ class RealtimeMotionEngine {
       lastStepTimestamp: this.lastStepTimestamp,
       sensorSource: this.sensorSource,
       hasHardwareSensors: this.hasHardwareSensors,
+      isReceivingSensorEvents: this.isReceivingSensorEvents,
+      isSecureContext: this.isSecureContext,
+      needsPermissionGesture: this.needsPermissionGesture,
+      lastAccelerationMagnitude: this.lastAccelerationMagnitude,
       gpsAccuracyMeters: this.gpsAccuracyMeters,
     };
   }

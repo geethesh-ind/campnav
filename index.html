@@ -12,8 +12,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        const isDevHost =
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.port === '3000' ||
+          window.location.port === '3001';
+
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+          if (isDevHost) {
+            navigator.serviceWorker.getRegistrations().then((regs) => {
+              regs.forEach((reg) => reg.unregister());
+            }).catch(() => {});
+            if ('caches' in window) {
+              caches.keys().then((keys) => keys.forEach((k) => caches.delete(k))).catch(() => {});
+            }
+          } else {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          }
         });
       }
     </script>

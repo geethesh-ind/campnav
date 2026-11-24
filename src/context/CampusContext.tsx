@@ -27,7 +27,7 @@ import {
 import { soundEffects } from '../utils/audioAlert';
 import { realtimeMotion, MotionTelemetry } from '../utils/realtimeMotion';
 
-const STORAGE_KEY = 'campusnav_db_v3_cec';
+const STORAGE_KEY = 'campusnav_db_v4_cec';
 
 interface CampusContextType {
   // Database
@@ -202,6 +202,18 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const isNavigatingRef = useRef(false);
   isNavigatingRef.current = isNavigating;
 
+  const userPositionRef = useRef<UserPosition>(userPosition);
+  userPositionRef.current = userPosition;
+
+  const startLocationRef = useRef<CampusLocation | null>(startLocation);
+  startLocationRef.current = startLocation;
+
+  const selectedDestinationRef = useRef<CampusLocation | null>(selectedDestination);
+  selectedDestinationRef.current = selectedDestination;
+
+  const routingPreferenceRef = useRef<RoutingPreference>(routingPreference);
+  routingPreferenceRef.current = routingPreference;
+
   const routeProgressRef = useRef<{ segmentIndex: number; segmentProgressMeters: number }>({
     segmentIndex: 0,
     segmentProgressMeters: 0,
@@ -328,20 +340,22 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setRemainingDistanceMeters(progressResult.remainingMeters);
     setCurrentStepIndex(progressResult.stepIndex);
 
-    // Floor transition
+    // Building or Floor transition
     if (progressResult.floorChanged) {
       setActiveBuildingIdState(progressResult.buildingId === 'outdoor' ? null : progressResult.buildingId);
       setActiveFloorIdState(progressResult.floorChanged.toFloorId);
       soundEffects.playRecalculatingChime();
+    } else {
+      setActiveBuildingIdState(progressResult.buildingId === 'outdoor' ? null : progressResult.buildingId);
+      setActiveFloorIdState(progressResult.floorId);
     }
 
-    // Arrival
+    // Arrival — keep navigation sheet open showing "Arrive at destination" so user can see arrival state
     if (progressResult.hasArrived) {
       soundEffects.playArrivalChime();
       if (typeof navigator !== 'undefined' && navigator.vibrate) {
         navigator.vibrate([200, 100, 200, 100, 400]);
       }
-      setIsNavigating(false);
       setIsSimulatingWalk(false);
     }
 
@@ -476,16 +490,23 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     dest?: CampusLocation,
     start?: CampusLocation
   ) => {
-    const targetDest = dest || selectedDestination;
+    const targetDest = dest || selectedDestinationRef.current;
     if (!targetDest) return;
 
-    const explicitStart = start || startLocation;
-    const route = computeRoute(targetDest, explicitStart, userPosition, routingPreference);
+    // Attempt to unlock mobile motion sensors on user's Start Navigation tap gesture
+    realtimeMotion.requestSensorPermission().catch(() => {});
+
+    const explicitStart = start !== undefined ? start : startLocationRef.current;
+    const currentPos = userPositionRef.current;
+    const currentPref = routingPreferenceRef.current;
+    const route = computeRoute(targetDest, explicitStart, currentPos, currentPref);
     if (!route) {
       alert('Could not find a walkable path with the selected preferences.');
       return;
     }
 
+    activeRouteRef.current = route;
+    isNavigatingRef.current = true;
     setActiveRoute(route);
     setCurrentStepIndex(0);
     setRemainingDistanceMeters(route.totalDistanceMeters);
@@ -512,13 +533,13 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         method: explicitStart ? 'manual' : prev.method,
         accuracyMeters: 1,
         lastUpdated: Date.now(),
-        confirmedLocationName: explicitStart ? explicitStart.name : prev.confirmedLocationName,
+        confirmedLocationName: explicitStart ? explicitStart.name : (first.label || prev.confirmedLocationName),
       }));
 
       setActiveBuildingIdState(first.buildingId === 'outdoor' ? null : first.buildingId);
       setActiveFloorIdState(first.floorId);
     }
-  }, [selectedDestination, startLocation, userPosition, routingPreference, computeRoute]);
+  }, [computeRoute]);
 
   // Automatically recalculate active route if user changes routing preference (Shortest / Fewer Stairs / Wheelchair)
   useEffect(() => {
@@ -579,27 +600,46 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   // Step Forward in Navigation (Manual jump to next landmark)
   const stepForward = useCallback(() => {
-    if (!activeRoute) return;
+    const route = activeRouteRef.current;
+    if (!route) return;
 
-    if (currentStepIndex >= activeRoute.steps.length - 1) {
+    if (currentStepIndex >= route.steps.length - 1) {
       // Arrived!
       soundEffects.playArrivalChime();
+      setIsSimulatingWalk(false);
       return;
     }
 
     const nextIndex = currentStepIndex + 1;
     setCurrentStepIndex(nextIndex);
 
-    // Move user position to the next node
-    const nextNode = activeRoute.nodePath[Math.min(nextIndex, activeRoute.nodePath.length - 1)];
+    // Move user position to the startNode of the next step (or endNode if arrive step)
+    const nextStep = route.steps[nextIndex];
+    const nextNode = nextStep ? nextStep.startNode : route.nodePath[Math.min(nextIndex, route.nodePath.length - 1)];
     if (nextNode) {
-      routeProgressRef.current = { segmentIndex: Math.min(nextIndex, activeRoute.nodePath.length - 2), segmentProgressMeters: 0 };
+      const nodeIdxInPath = Math.max(0, route.nodePath.findIndex(n => n.id === nextNode.id));
+      routeProgressRef.current = {
+        segmentIndex: Math.min(nodeIdxInPath, Math.max(0, route.nodePath.length - 2)),
+        segmentProgressMeters: 0,
+      };
+
+      const nextNextNode = route.nodePath[Math.min(nodeIdxInPath + 1, route.nodePath.length - 1)];
+      const heading = nextNextNode && nextNextNode.id !== nextNode.id
+        ? calculateSegmentHeading(nextNode, nextNextNode)
+        : userPositionRef.current.heading;
+
+      const remaining = route.steps
+        .slice(nextIndex)
+        .reduce((acc, s) => acc + s.distanceMeters, 0);
+      setRemainingDistanceMeters(remaining);
+
       setUserPosition(prev => ({
         ...prev,
         x: nextNode.x,
         y: nextNode.y,
         buildingId: nextNode.buildingId,
         floorId: nextNode.floorId,
+        heading,
         lastUpdated: Date.now(),
         confirmedLocationName: nextNode.label || prev.confirmedLocationName,
       }));
@@ -607,18 +647,15 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       // Auto update active view if floor changed
       setActiveBuildingIdState(nextNode.buildingId === 'outdoor' ? null : nextNode.buildingId);
       setActiveFloorIdState(nextNode.floorId);
+
+      if (nextStep?.action === 'arrive') {
+        soundEffects.playArrivalChime();
+        setIsSimulatingWalk(false);
+      }
     }
 
-    // Check wrong direction
-    if (nextNode) {
-      const check = detectWrongDirection(
-        { x: nextNode.x, y: nextNode.y, floorId: nextNode.floorId, buildingId: nextNode.buildingId },
-        activeRoute.nodePath,
-        nextIndex
-      );
-      setWrongDirectionStatus(check.isWrongDirection ? check : null);
-    }
-  }, [activeRoute, currentStepIndex]);
+    setWrongDirectionStatus(null);
+  }, [currentStepIndex]);
 
   // Step Backward
   const stepBackward = useCallback(() => {

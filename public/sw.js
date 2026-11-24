@@ -1,5 +1,5 @@
 // Canara Engineering College Offline Service Worker
-const CACHE_NAME = 'cec-campusnav-v2';
+const CACHE_NAME = 'cec-campusnav-v3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

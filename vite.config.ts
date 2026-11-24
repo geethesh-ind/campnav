@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, Plugin} from 'vite';
@@ -103,8 +104,9 @@ function liveLocationBackendPlugin(): Plugin {
 }
 
 export default defineConfig(() => {
+  const useHttps = process.env.VITE_HTTPS === 'true';
   return {
-    plugins: [react(), tailwindcss(), liveLocationBackendPlugin()],
+    plugins: [react(), tailwindcss(), ...(useHttps ? [basicSsl()] : []), liveLocationBackendPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, '.'),

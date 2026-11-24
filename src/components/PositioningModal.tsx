@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Compass,
   X,
@@ -12,7 +12,10 @@ import {
   Footprints,
   Smartphone,
   Cpu,
+  ShieldCheck,
+  AlertTriangle,
 } from 'lucide-react';
+import QRCode from 'qrcode';
 import { useCampus } from '../context/CampusContext';
 
 interface PositioningModalProps {
@@ -31,6 +34,22 @@ export const PositioningModal: React.FC<PositioningModalProps> = ({ isOpen, onCl
     requestMotionPermission,
     isLiveTracking,
   } = useCampus();
+
+  const [mobileHttpsUrl, setMobileHttpsUrl] = useState('https://192.168.1.34:3001/');
+  const [mobileQrDataUrl, setMobileQrDataUrl] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const host = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '192.168.1.34'
+        : window.location.hostname;
+      const url = `https://${host}:3001${window.location.search}`;
+      setMobileHttpsUrl(url);
+      QRCode.toDataURL(url, { width: 180, margin: 1 })
+        .then(setMobileQrDataUrl)
+        .catch(() => {});
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -90,9 +109,9 @@ export const PositioningModal: React.FC<PositioningModalProps> = ({ isOpen, onCl
               Detects footstep oscillations via smartphone accelerometer and calculates direction using device compass. Moves your dot along campus corridors automatically as you walk.
             </p>
 
-            <div className="mt-3 grid grid-cols-3 gap-2 bg-white/10 rounded-lg p-2.5 text-center font-mono">
+            <div className="mt-3 grid grid-cols-4 gap-2 bg-white/10 rounded-lg p-2.5 text-center font-mono">
               <div>
-                <span className="text-[10px] text-blue-200 block uppercase">Steps Taken</span>
+                <span className="text-[10px] text-blue-200 block uppercase">Steps</span>
                 <span className="text-sm font-bold text-white">{motionTelemetry.stepCount}</span>
               </div>
               <div>
@@ -100,8 +119,12 @@ export const PositioningModal: React.FC<PositioningModalProps> = ({ isOpen, onCl
                 <span className="text-sm font-bold text-amber-300">{userPosition.heading}°</span>
               </div>
               <div>
-                <span className="text-[10px] text-blue-200 block uppercase">Est. Speed</span>
+                <span className="text-[10px] text-blue-200 block uppercase">Speed</span>
                 <span className="text-sm font-bold text-emerald-300">{motionTelemetry.currentSpeedMps} m/s</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-blue-200 block uppercase">Accel</span>
+                <span className="text-sm font-bold text-blue-200">{motionTelemetry.lastAccelerationMagnitude}</span>
               </div>
             </div>
 
@@ -123,6 +146,32 @@ export const PositioningModal: React.FC<PositioningModalProps> = ({ isOpen, onCl
                 <Footprints className="w-3.5 h-3.5" />
                 <span>Step +1.4m</span>
               </button>
+            </div>
+          </div>
+
+          {/* Mobile HTTPS QR Launcher for Walking Sensors */}
+          <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 flex flex-col sm:flex-row items-center gap-4">
+            {mobileQrDataUrl && (
+              <img
+                src={mobileQrDataUrl}
+                alt="Mobile HTTPS QR Code"
+                className="w-28 h-28 rounded-xl border border-amber-300 bg-white p-1 shrink-0"
+              />
+            )}
+            <div className="flex-1 text-left">
+              <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Test Live Walking on Your Phone (HTTPS Required)</span>
+              </div>
+              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                Mobile browsers block accelerometer footsteps and compass sensors over plain <code className="bg-amber-100 px-1 rounded">http://</code>. Scan this QR code or open the secure HTTPS link on your phone (if prompted about the local certificate, tap <b>Advanced → Proceed</b>):
+              </p>
+              <a
+                href={mobileHttpsUrl}
+                className="mt-2 inline-block font-mono text-xs font-bold text-[#0f3b7a] underline break-all"
+              >
+                {mobileHttpsUrl}
+              </a>
             </div>
           </div>
 

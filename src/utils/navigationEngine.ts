@@ -591,9 +591,9 @@ export function advanceRouteProgress(
   let floorChanged: RouteProgressState['floorChanged'] | undefined;
 
   // Move forward through segments if progress exceeds current segment length
-  while (segIdx < pathNodes.length - 2) {
+  while (segIdx < pathNodes.length - 1) {
     const segLen = getSegmentLength(segIdx);
-    if (progMeters >= segLen) {
+    if (progMeters >= segLen && segIdx < pathNodes.length - 2) {
       progMeters -= segLen;
       const prevNode = pathNodes[segIdx];
       segIdx += 1;
