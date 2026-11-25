@@ -450,7 +450,7 @@ export const CampusMap: React.FC = () => {
       )}
 
       {/* ALWAYS-VISIBLE 4-FLOOR SWITCHER (Right side, floating Apple Maps style) */}
-      <div className="absolute right-3 top-16 z-10 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl p-1 ring-1 ring-black/8 shadow-lg">
+      <div className="absolute right-2.5 sm:right-3 top-24 sm:top-16 z-10 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl p-1 ring-1 ring-black/8 shadow-lg">
         <div className="flex flex-col gap-0.5">
           {academicFloors.map(f => {
             const isActive = f.id === activeFloorId;
@@ -505,8 +505,16 @@ export const CampusMap: React.FC = () => {
         </button>
       </div>
 
-      {/* Floating Map Zoom / Center Controls */}
-      <div className="absolute right-3 bottom-4 z-10 flex flex-col gap-2">
+      {/* Floating Map Zoom / Center Controls (shifts up on mobile when bottom cards are open) */}
+      <div
+        className={`absolute right-2.5 sm:right-3 z-10 flex flex-col gap-2 transition-all duration-200 ${
+          isNavigating
+            ? 'bottom-56 sm:bottom-4'
+            : selectedDestination
+            ? 'bottom-52 sm:bottom-4'
+            : 'bottom-16 sm:bottom-4'
+        }`}
+      >
         <div className="bg-white/95 backdrop-blur-md rounded-2xl ring-1 ring-black/8 shadow-lg p-1 flex flex-col gap-0.5">
           <button
             onClick={handleZoomIn}
@@ -550,7 +558,7 @@ export const CampusMap: React.FC = () => {
       <svg
         ref={svgRef}
         viewBox="0 0 1000 650"
-        className="w-full h-full cursor-grab active:cursor-grabbing flex-1"
+        className="w-full h-full cursor-grab active:cursor-grabbing flex-1 touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

@@ -1,6 +1,21 @@
+export type HapticEventType =
+  | 'start'
+  | 'turn_left'
+  | 'turn_right'
+  | 'straight'
+  | 'floor_change'
+  | 'footstep'
+  | 'qr_verified'
+  | 'recalculating'
+  | 'wrong_direction'
+  | 'arrive';
+
+export type HapticListener = (type: HapticEventType, pattern: number | number[]) => void;
+
 class SoundEffects {
   private ctx: AudioContext | null = null;
   private isMuted = false;
+  private hapticListeners = new Set<HapticListener>();
 
   private getContext(): AudioContext | null {
     if (typeof window === 'undefined') return null;
@@ -17,20 +32,94 @@ class SoundEffects {
   }
 
   /**
-   * Safe cross-platform Vibration API wrapper.
+   * Unlocks Web Audio & Haptics on the user's first touch gesture (critical on iOS Safari & mobile Chrome).
+   */
+  unlockMobileAudioAndHaptics(): void {
+    try {
+      const ctx = this.getContext();
+      if (ctx && ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+    } catch {
+      // Ignored
+    }
+  }
+
+  /**
+   * Subscribe to haptic triggers so mobile UI (including iOS devices without navigator.vibrate)
+   * can render synchronized tactile visual pulses.
+   */
+  onHaptic(listener: HapticListener): () => void {
+    this.hapticListeners.add(listener);
+    return () => this.hapticListeners.delete(listener);
+  }
+
+  private emitHaptic(type: HapticEventType, pattern: number | number[]): void {
+    this.hapticListeners.forEach(listener => listener(type, pattern));
+  }
+
+  /**
+   * Low-frequency tactile thump synthesized through Web Audio for mobile devices
+   * where navigator.vibrate is unsupported (such as iOS Safari).
+   */
+  private playTactilePulseFallback(pattern: number | number[]): void {
+    if (this.isMuted || typeof window === 'undefined') return;
+    try {
+      const ctx = this.getContext();
+      if (!ctx) return;
+
+      const pulses = Array.isArray(pattern) ? pattern : [pattern];
+      let offsetSec = 0;
+
+      for (let i = 0; i < pulses.length; i++) {
+        const durSec = Math.min(0.35, Math.max(0.015, pulses[i] / 1000));
+        if (i % 2 === 0) {
+          // Active vibration segment -> low-frequency 115Hz tactile thump
+          const start = ctx.currentTime + offsetSec;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(115, start);
+          osc.frequency.exponentialRampToValueAtTime(65, start + durSec);
+
+          gain.gain.setValueAtTime(0.09, start);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + durSec);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(start);
+          osc.stop(start + durSec + 0.01);
+        }
+        offsetSec += durSec;
+      }
+    } catch {
+      // Ignored
+    }
+  }
+
+  /**
+   * Safe cross-platform Vibration API wrapper with iOS tactile audio + visual fallback.
    * Executes haptic vibration independently of AudioContext state so mobile
    * devices vibrate reliably even if audio is suspended or muted.
    */
-  vibrate(pattern: number | number[]): boolean {
+  vibrate(pattern: number | number[], eventType: HapticEventType = 'straight'): boolean {
     if (this.isMuted) return false;
+    this.emitHaptic(eventType, pattern);
+
+    let vibrated = false;
     try {
       if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
-        return navigator.vibrate(pattern);
+        vibrated = navigator.vibrate(pattern);
       }
     } catch {
       // Ignore if blocked by browser autoplay/user-activation policy
     }
-    return false;
+
+    if (!vibrated) {
+      this.playTactilePulseFallback(pattern);
+    }
+
+    return vibrated;
   }
 
   stopVibration(): void {
@@ -55,7 +144,7 @@ class SoundEffects {
    * - arrive: celebratory completion cadence [160, 80, 160, 80, 360]
    */
   vibrateNavigationStart() {
-    this.vibrate([70]);
+    this.vibrate([70], 'start');
   }
 
   vibrateStepTransition(
@@ -72,34 +161,36 @@ class SoundEffects {
   ) {
     switch (action) {
       case 'turn_left':
-        this.vibrate([60, 50, 60]);
+        this.vibrate([60, 50, 60], 'turn_left');
         break;
       case 'turn_right':
-        this.vibrate([110, 50, 50]);
+        this.vibrate([110, 50, 50], 'turn_right');
         break;
       case 'staircase_up':
       case 'staircase_down':
       case 'elevator_up':
       case 'elevator_down':
-        this.vibrate([80, 60, 120, 60, 180]);
+        this.vibrate([80, 60, 120, 60, 180], 'floor_change');
         break;
       case 'arrive':
-        this.vibrate([160, 80, 160, 80, 360]);
+        this.vibrate([160, 80, 160, 80, 360], 'arrive');
         break;
       case 'start':
+        this.vibrate([70], 'start');
+        break;
       case 'straight':
       default:
-        this.vibrate([45]);
+        this.vibrate([45], 'straight');
         break;
     }
   }
 
   vibrateFootstep() {
-    this.vibrate(18);
+    this.vibrate(18, 'footstep');
   }
 
   vibrateQRConfirmed() {
-    this.vibrate([80, 50, 140]);
+    this.vibrate([80, 50, 140], 'qr_verified');
   }
 
   playTurnChime(action: 'turn_left' | 'turn_right' | 'straight') {
@@ -133,7 +224,7 @@ class SoundEffects {
 
   playWrongDirectionAlert() {
     // Trigger haptic alert first so it fires even if AudioContext is unavailable
-    this.vibrate([220, 90, 220, 90, 300]);
+    this.vibrate([220, 90, 220, 90, 300], 'wrong_direction');
     if (this.isMuted) return;
 
     try {
@@ -164,7 +255,7 @@ class SoundEffects {
   }
 
   playRecalculatingChime() {
-    this.vibrate([80, 60, 120]);
+    this.vibrate([80, 60, 120], 'recalculating');
     if (this.isMuted) return;
 
     try {
@@ -194,7 +285,7 @@ class SoundEffects {
 
   playArrivalChime() {
     // Trigger single consistent arrival haptic cadence first
-    this.vibrate([160, 80, 160, 80, 360]);
+    this.vibrate([160, 80, 160, 80, 360], 'arrive');
     if (this.isMuted) return;
 
     try {

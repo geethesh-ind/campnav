@@ -31,6 +31,7 @@ const MainScreenContent: React.FC = () => {
     locations,
     activeBuildingId,
     activeFloorId,
+    selectedDestination,
     setSelectedDestination,
     startNavigation,
     setActiveBuildingId,
@@ -71,8 +72,10 @@ const MainScreenContent: React.FC = () => {
 
       {/* FLOATING TOP-LEFT SEARCH & EXPLORE DRAWER (Google / Apple Maps style) */}
       <div
-        className={`absolute top-3 left-3 z-20 flex flex-col gap-2 transition-all duration-200 pointer-events-none ${
-          isSidebarCollapsed ? 'w-auto' : 'w-[calc(100vw-24px)] sm:w-[376px]'
+        className={`absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-20 flex flex-col gap-2 transition-all duration-200 pointer-events-none ${
+          isSidebarCollapsed
+            ? 'w-auto'
+            : 'w-[calc(100vw-164px)] xs:w-[calc(100vw-176px)] sm:w-[376px]'
         }`}
       >
         {/* Top Row: Search Box + Sidebar Toggle */}
@@ -241,10 +244,10 @@ const MainScreenContent: React.FC = () => {
       </div>
 
       {/* FLOATING TOP-RIGHT COMPACT TOOL CLUSTER */}
-      <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
+      <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-20 flex items-center gap-1 sm:gap-1.5">
         <button
           onClick={() => setRoutingPreference(isWheelchair ? 'shortest' : 'wheelchair')}
-          className={`h-10 px-3 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 transition-all cursor-pointer ${
+          className={`h-11 sm:h-10 px-2.5 sm:px-3 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 transition-all cursor-pointer active:scale-95 ${
             isWheelchair
               ? 'bg-neutral-900 text-white ring-neutral-900'
               : 'bg-white/95 hover:bg-white text-neutral-800 ring-black/8 backdrop-blur-md'
@@ -257,7 +260,7 @@ const MainScreenContent: React.FC = () => {
 
         <button
           onClick={() => setIsPositioningOpen(true)}
-          className="h-10 px-3 rounded-xl bg-white/95 hover:bg-white text-neutral-800 text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 ring-black/8 backdrop-blur-md transition-all cursor-pointer"
+          className="h-11 sm:h-10 px-2.5 sm:px-3 rounded-xl bg-white/95 hover:bg-white text-neutral-800 text-xs font-semibold flex items-center gap-1.5 shadow-lg ring-1 ring-black/8 backdrop-blur-md transition-all cursor-pointer active:scale-95"
           title="Live walking sensors & Mobile HTTPS QR"
         >
           <span
@@ -265,7 +268,7 @@ const MainScreenContent: React.FC = () => {
               motionTelemetry.isReceivingSensorEvents ? 'bg-emerald-500' : 'bg-amber-500'
             }`}
           />
-          <Smartphone className="w-3.5 h-3.5 text-neutral-600 md:hidden" />
+          <Smartphone className="w-4 h-4 text-neutral-600 md:hidden" />
           <span className="hidden md:inline">
             {motionTelemetry.stepCount > 0 ? `${motionTelemetry.stepCount} steps` : 'Walk Sensors'}
           </span>
@@ -273,7 +276,7 @@ const MainScreenContent: React.FC = () => {
 
         <button
           onClick={() => setIsQROpen(true)}
-          className="sm:hidden h-10 w-10 rounded-xl bg-white/95 hover:bg-white text-neutral-800 flex items-center justify-center shadow-lg ring-1 ring-black/8 backdrop-blur-md cursor-pointer"
+          className="sm:hidden h-11 w-11 rounded-xl bg-white/95 hover:bg-white text-neutral-800 flex items-center justify-center shadow-lg ring-1 ring-black/8 backdrop-blur-md cursor-pointer active:scale-95"
           title="Scan QR Checkpoint"
         >
           <QrCode className="w-4 h-4" />
@@ -293,7 +296,7 @@ const MainScreenContent: React.FC = () => {
 
         <button
           onClick={() => setIsAdminOpen(prev => !prev)}
-          className={`h-10 w-10 rounded-xl flex items-center justify-center shadow-lg ring-1 transition-all cursor-pointer ${
+          className={`h-11 w-11 sm:h-10 sm:w-10 rounded-xl flex items-center justify-center shadow-lg ring-1 transition-all cursor-pointer active:scale-95 ${
             isAdminOpen
               ? 'bg-neutral-900 text-white ring-neutral-900'
               : 'bg-white/95 hover:bg-white text-neutral-700 ring-black/8 backdrop-blur-md'
@@ -304,15 +307,15 @@ const MainScreenContent: React.FC = () => {
         </button>
       </div>
 
-      {/* MOBILE BOTTOM QUICK BLOCK BAR (only on small screens when not navigating) */}
-      {!isNavigating && (
-        <div className="sm:hidden absolute bottom-3 left-3 right-16 z-10 flex items-center gap-1.5 overflow-x-auto no-scrollbar pointer-events-auto">
+      {/* MOBILE BOTTOM QUICK BLOCK BAR (only on small screens when not navigating and no destination card open) */}
+      {!isNavigating && !selectedDestination && (
+        <div className="sm:hidden absolute bottom-3 left-2.5 right-16 z-10 flex items-center gap-1.5 overflow-x-auto no-scrollbar pointer-events-auto pb-safe">
           <button
             onClick={() => {
               setActiveBuildingId(null);
               setActiveFloorId('outdoor');
             }}
-            className={`px-3 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer ${
+            className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer active:scale-95 ${
               !activeBuildingId || activeBuildingId === 'outdoor'
                 ? 'bg-neutral-900 text-white ring-neutral-900'
                 : 'bg-white/95 text-neutral-800 ring-black/8'
@@ -324,7 +327,7 @@ const MainScreenContent: React.FC = () => {
             <button
               key={b.id}
               onClick={() => setActiveBuildingId(b.id)}
-              className={`px-3 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold shadow-md ring-1 whitespace-nowrap cursor-pointer active:scale-95 ${
                 activeBuildingId === b.id
                   ? 'bg-neutral-900 text-white ring-neutral-900'
                   : 'bg-white/95 text-neutral-800 ring-black/8'

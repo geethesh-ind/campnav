@@ -197,7 +197,7 @@ export const SearchBar: React.FC<SearchBarProps> = () => {
           }}
           onFocus={() => setIsOpen(true)}
           placeholder="Search rooms, labs, HOD, or washrooms..."
-          className="w-full py-3 pr-9 text-[13px] text-neutral-900 placeholder:text-neutral-400 bg-transparent focus:outline-hidden font-medium"
+          className="w-full py-2.5 sm:py-3 pr-9 text-base sm:text-[13px] text-neutral-900 placeholder:text-neutral-400 bg-transparent focus:outline-hidden font-medium"
           aria-label="Search campus rooms and locations"
         />
         {searchQuery && (
@@ -239,7 +239,7 @@ export const SearchBar: React.FC<SearchBarProps> = () => {
 
       {/* Results Popover */}
       {isOpen && (
-        <div className="absolute left-0 right-0 top-[52px] mt-1 bg-white rounded-2xl shadow-2xl ring-1 ring-black/10 max-h-[380px] overflow-y-auto divide-y divide-neutral-100 z-50">
+        <div className="fixed sm:absolute left-2.5 right-2.5 sm:left-0 sm:right-0 top-[96px] sm:top-[52px] mt-1 bg-white rounded-2xl shadow-2xl ring-1 ring-black/10 max-h-[55dvh] sm:max-h-[380px] overflow-y-auto divide-y divide-neutral-100 z-50">
           {filteredLocations.length > 0 ? (
             filteredLocations.slice(0, 18).map(loc => {
               const floorCode = getFloorBadge(loc.floorId);

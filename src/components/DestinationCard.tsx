@@ -102,7 +102,7 @@ export const DestinationCard: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100vw-24px)] max-w-[440px] pointer-events-auto">
+    <div className="fixed bottom-2.5 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100vw-16px)] sm:w-[calc(100vw-24px)] max-w-[440px] pointer-events-auto pb-safe">
       <div className="bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden">
         <div className="p-4">
           <div className="flex items-start justify-between gap-3">

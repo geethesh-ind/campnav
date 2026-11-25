@@ -223,6 +223,33 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   currentStepIndexRef.current = currentStepIndex;
 
   const hasArrivedAlertedRef = useRef<boolean>(false);
+  const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null);
+
+  // Keep mobile screen awake during active turn-by-turn navigation (Screen Wake Lock API)
+  useEffect(() => {
+    const requestWakeLock = async () => {
+      try {
+        const navAny = navigator as unknown as {
+          wakeLock?: { request: (type: 'screen') => Promise<{ release: () => Promise<void> }> };
+        };
+        if (isNavigating && navAny.wakeLock) {
+          wakeLockRef.current = await navAny.wakeLock.request('screen');
+        } else if (!isNavigating && wakeLockRef.current) {
+          await wakeLockRef.current.release();
+          wakeLockRef.current = null;
+        }
+      } catch {
+        // WakeLock may be disallowed in background tab or low battery mode
+      }
+    };
+    requestWakeLock();
+    return () => {
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().catch(() => {});
+        wakeLockRef.current = null;
+      }
+    };
+  }, [isNavigating]);
 
   // Helper to switch active building & floor seamlessly
   const setActiveBuildingId = useCallback((bId: string | null) => {
@@ -520,7 +547,8 @@ export const CampusProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const targetDest = dest || selectedDestinationRef.current;
     if (!targetDest) return;
 
-    // Attempt to unlock mobile motion sensors on user's Start Navigation tap gesture
+    // Attempt to unlock mobile motion sensors, audio & haptics on user's Start Navigation tap gesture
+    soundEffects.unlockMobileAudioAndHaptics();
     realtimeMotion.requestSensorPermission().catch(() => {});
 
     const explicitStart = start !== undefined ? start : startLocationRef.current;

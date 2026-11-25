@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowUp,
   CornerUpRight,
@@ -19,9 +19,11 @@ import {
   LocateFixed,
   Smartphone,
   ListOrdered,
+  Vibrate,
 } from 'lucide-react';
 import { StairsIcon } from './icons/StairsIcon';
 import { useCampus } from '../context/CampusContext';
+import { soundEffects, HapticEventType } from '../utils/audioAlert';
 
 export const NavigationSheet: React.FC = () => {
   const {
@@ -53,6 +55,18 @@ export const NavigationSheet: React.FC = () => {
 
   const [copiedLink, setCopiedLink] = useState(false);
   const [showAllSteps, setShowAllSteps] = useState(false);
+  const [hapticPulse, setHapticPulse] = useState<HapticEventType | null>(null);
+
+  useEffect(() => {
+    const unsub = soundEffects.onHaptic((eventType) => {
+      setHapticPulse(eventType);
+      const timer = window.setTimeout(() => {
+        setHapticPulse(null);
+      }, 360);
+      return () => window.clearTimeout(timer);
+    });
+    return unsub;
+  }, []);
 
   if (!isNavigating || !activeRoute) {
     return null;
@@ -111,8 +125,18 @@ export const NavigationSheet: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100vw-24px)] max-w-[500px] pointer-events-auto">
-      <div className="bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden divide-y divide-neutral-100">
+    <div className="fixed bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100vw-16px)] sm:w-[calc(100vw-24px)] max-w-[500px] pointer-events-auto pb-safe">
+      <div
+        className={`bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl ring-1 overflow-hidden divide-y divide-neutral-100 transition-all ${
+          hapticPulse === 'wrong_direction'
+            ? 'ring-2 ring-rose-500 animate-haptic-bump'
+            : hapticPulse === 'arrive'
+            ? 'ring-2 ring-emerald-500 animate-haptic-bump'
+            : hapticPulse
+            ? 'ring-2 ring-blue-500 animate-haptic-bump'
+            : 'ring-black/10'
+        }`}
+      >
         {/* Wrong Direction Alert */}
         {wrongDirectionStatus?.isWrongDirection && (
           <div className="bg-rose-600 text-white px-4 py-2.5 flex items-center justify-between gap-2">
@@ -157,33 +181,42 @@ export const NavigationSheet: React.FC = () => {
         )}
 
         {/* Turn-by-Turn Dark Sleek Header */}
-        <div className={`px-4 py-3.5 text-white ${isArrived ? 'bg-emerald-700' : 'bg-neutral-950'}`}>
+        <div className={`px-3.5 sm:px-4 py-3 sm:py-3.5 text-white ${isArrived ? 'bg-emerald-700' : 'bg-neutral-950'}`}>
           <div className="flex items-center justify-between gap-2 mb-2.5">
-            <span className="text-[11px] font-medium text-neutral-400 truncate">
-              {isArrived ? 'Arrived at destination' : `To ${activeRoute.destinationLocationName.split(' (')[0]}`}
-            </span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="text-[11px] font-medium text-neutral-400 truncate">
+                {isArrived ? 'Arrived at destination' : `To ${activeRoute.destinationLocationName.split(' (')[0]}`}
+              </span>
+              {hapticPulse && (
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-blue-500/25 text-blue-300 text-[10px] font-semibold shrink-0 animate-pulse">
+                  <Vibrate className="w-2.5 h-2.5" />
+                  <span>Haptic</span>
+                </span>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={() => setShowAllSteps(prev => !prev)}
-                className={`h-7 px-2 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer ${
+                className={`h-8 px-2.5 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
                   showAllSteps ? 'bg-white text-neutral-950' : 'bg-white/10 hover:bg-white/15 text-neutral-200'
                 }`}
               >
-                <ListOrdered className="w-3 h-3" />
+                <ListOrdered className="w-3.5 h-3.5" />
                 <span>{Math.min(currentStepIndex + 1, activeRoute.steps.length)}/{activeRoute.steps.length}</span>
               </button>
               <button
                 onClick={handleShare}
-                className="h-7 px-2 rounded-lg bg-white/10 hover:bg-white/15 text-neutral-200 text-[11px] font-semibold flex items-center gap-1 cursor-pointer"
+                className="h-8 w-8 rounded-lg bg-white/10 hover:bg-white/15 text-neutral-200 text-[11px] font-semibold flex items-center justify-center cursor-pointer active:scale-95"
+                aria-label="Share route"
               >
-                {copiedLink ? <Check className="w-3 h-3 text-emerald-400" /> : <Share2 className="w-3 h-3" />}
+                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
               </button>
               <button
                 onClick={stopNavigation}
-                className="w-7 h-7 rounded-lg bg-white/10 hover:bg-rose-500 flex items-center justify-center text-white cursor-pointer transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-rose-500 flex items-center justify-center text-white cursor-pointer transition-colors active:scale-95"
                 aria-label="Exit navigation"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -279,54 +312,56 @@ export const NavigationSheet: React.FC = () => {
           </div>
         </div>
 
-        {/* Compact Walk & Simulation Controls */}
-        <div className="px-3 py-2 bg-neutral-50 flex flex-wrap items-center justify-between gap-1.5 text-xs">
+        {/* Compact Walk & Simulation Controls (40px+ Mobile Touch Targets) */}
+        <div className="px-3 py-2.5 bg-neutral-50 flex flex-wrap items-center justify-between gap-1.5 text-xs">
           <div className="flex items-center gap-1.5">
             <button
               onClick={toggleSimulation}
-              className={`h-8 px-3 rounded-lg font-semibold flex items-center gap-1.5 cursor-pointer transition-colors ${
+              className={`h-10 px-3.5 rounded-xl font-semibold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 ${
                 isSimulatingWalk
                   ? 'bg-neutral-900 text-white'
                   : 'bg-white hover:bg-neutral-100 text-neutral-800 ring-1 ring-black/10'
               }`}
             >
-              {isSimulatingWalk ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+              {isSimulatingWalk ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               <span>{isSimulatingWalk ? 'Pause' : 'Walk'}</span>
             </button>
 
             <button
               onClick={() => stepMetersForward(1.4)}
-              className="h-8 px-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+              className="h-10 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-1 cursor-pointer transition-all active:scale-95"
             >
-              <Footprints className="w-3 h-3" />
+              <Footprints className="w-3.5 h-3.5" />
               <span>+1.4m</span>
             </button>
 
-            <div className="flex items-center bg-white rounded-lg ring-1 ring-black/10 p-0.5">
+            <div className="flex items-center bg-white rounded-xl ring-1 ring-black/10 p-0.5">
               <button
                 onClick={stepBackward}
                 disabled={currentStepIndex <= 0}
-                className="h-7 w-7 rounded-md hover:bg-neutral-100 disabled:opacity-30 flex items-center justify-center text-neutral-700 cursor-pointer"
+                className="h-9 w-9 rounded-lg hover:bg-neutral-100 disabled:opacity-30 flex items-center justify-center text-neutral-700 cursor-pointer active:scale-95"
                 title="Previous step"
+                aria-label="Previous step"
               >
-                <SkipBack className="w-3.5 h-3.5" />
+                <SkipBack className="w-4 h-4" />
               </button>
               <button
                 onClick={stepForward}
                 disabled={currentStepIndex >= activeRoute.steps.length - 1}
-                className="h-7 w-7 rounded-md hover:bg-neutral-100 disabled:opacity-30 flex items-center justify-center text-neutral-700 cursor-pointer"
+                className="h-9 w-9 rounded-lg hover:bg-neutral-100 disabled:opacity-30 flex items-center justify-center text-neutral-700 cursor-pointer active:scale-95"
                 title="Next step"
+                aria-label="Next step"
               >
-                <SkipForward className="w-3.5 h-3.5" />
+                <SkipForward className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="hidden xs:flex items-center bg-white rounded-lg ring-1 ring-black/10 p-0.5">
+            <div className="hidden sm:flex items-center bg-white rounded-xl ring-1 ring-black/10 p-0.5">
               {[1, 2, 4].map(spd => (
                 <button
                   key={spd}
                   onClick={() => setSimulationSpeed(spd)}
-                  className={`h-7 px-1.5 rounded-md text-[11px] font-semibold cursor-pointer ${
+                  className={`h-8 px-2 rounded-lg text-[11px] font-semibold cursor-pointer ${
                     simulationSpeed === spd ? 'bg-neutral-900 text-white' : 'text-neutral-500'
                   }`}
                 >
@@ -336,26 +371,28 @@ export const NavigationSheet: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={toggleFollowUser}
-              className={`h-8 w-8 rounded-lg flex items-center justify-center cursor-pointer transition-colors ${
+              className={`h-10 w-10 rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-95 ${
                 isFollowUser ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-white text-neutral-500 ring-1 ring-black/10'
               }`}
               title={isFollowUser ? 'Camera following user' : 'Free camera'}
+              aria-label="Toggle follow user"
             >
-              <LocateFixed className="w-3.5 h-3.5" />
+              <LocateFixed className="w-4 h-4" />
             </button>
             <button
               onClick={requestMotionPermission}
-              className="h-8 w-8 rounded-lg bg-white hover:bg-neutral-100 text-neutral-600 ring-1 ring-black/10 flex items-center justify-center cursor-pointer"
+              className="h-10 w-10 rounded-xl bg-white hover:bg-neutral-100 text-neutral-600 ring-1 ring-black/10 flex items-center justify-center cursor-pointer active:scale-95"
               title="Calibrate phone sensors"
+              aria-label="Calibrate phone sensors"
             >
-              <Smartphone className="w-3.5 h-3.5" />
+              <Smartphone className="w-4 h-4" />
             </button>
             <button
               onClick={simulateWrongTurn}
-              className="h-8 px-2 rounded-lg bg-white hover:bg-rose-50 text-neutral-600 hover:text-rose-600 ring-1 ring-black/10 text-[11px] font-semibold cursor-pointer"
+              className="h-10 px-2.5 rounded-xl bg-white hover:bg-rose-50 text-neutral-600 hover:text-rose-600 ring-1 ring-black/10 text-[11px] font-semibold cursor-pointer active:scale-95"
               title="Simulate wrong turn"
             >
               Off-route
