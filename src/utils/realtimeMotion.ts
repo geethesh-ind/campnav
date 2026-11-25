@@ -9,6 +9,8 @@
  * 4. iOS 13+ permission handshakes
  */
 
+import { soundEffects } from './audioAlert';
+
 export interface MotionTelemetry {
   stepCount: number;
   totalDistanceMeters: number;
@@ -264,6 +266,7 @@ class RealtimeMotionEngine {
     ) {
       this.isAbovePeakThreshold = true;
       this.lastPeakTime = now;
+      soundEffects.vibrateFootstep();
       this.registerStep(this.stepLengthMeters, 'hardware');
     } else if (this.isAbovePeakThreshold && this.smoothedDynMag < this.stepThreshold * 0.65) {
       this.isAbovePeakThreshold = false;

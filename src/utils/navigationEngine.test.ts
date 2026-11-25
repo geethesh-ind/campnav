@@ -232,5 +232,59 @@ test('advanceRouteProgress interpolates coordinates, transitions floors and dete
   assert.equal(prog3.x, 30);
 });
 
+import { soundEffects } from './audioAlert';
+
+test('navigation haptic vibration patterns trigger accurately across lifecycle events', () => {
+  const vibratedPatterns: Array<number | number[]> = [];
+  const origNavigator = globalThis.navigator;
+
+  Object.defineProperty(globalThis, 'navigator', {
+    value: {
+      ...origNavigator,
+      vibrate: (pattern: number | number[]) => {
+        vibratedPatterns.push(pattern);
+        return true;
+      },
+    },
+    configurable: true,
+    writable: true,
+  });
+
+  try {
+    soundEffects.vibrateNavigationStart();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [70]);
+
+    soundEffects.vibrateStepTransition('turn_left');
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [60, 50, 60]);
+
+    soundEffects.vibrateStepTransition('turn_right');
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [110, 50, 50]);
+
+    soundEffects.vibrateStepTransition('staircase_up');
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [80, 60, 120, 60, 180]);
+
+    soundEffects.playRecalculatingChime();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [80, 60, 120]);
+
+    soundEffects.playWrongDirectionAlert();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [220, 90, 220, 90, 300]);
+
+    soundEffects.playArrivalChime();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], [160, 80, 160, 80, 360]);
+
+    soundEffects.vibrateFootstep();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], 18);
+
+    soundEffects.stopVibration();
+    assert.deepEqual(vibratedPatterns[vibratedPatterns.length - 1], 0);
+  } finally {
+    Object.defineProperty(globalThis, 'navigator', {
+      value: origNavigator,
+      configurable: true,
+      writable: true,
+    });
+  }
+});
+
 
 
